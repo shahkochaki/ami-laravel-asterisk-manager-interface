@@ -36,13 +36,13 @@ class AmiEventListener
     {
         // Call events
         $this->registerCallEvents();
-        
+
         // SMS events
         $this->registerSmsEvents();
-        
+
         // System events
         $this->registerSystemEvents();
-        
+
         // Queue events
         $this->registerQueueEvents();
     }

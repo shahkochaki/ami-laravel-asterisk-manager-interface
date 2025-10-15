@@ -96,7 +96,7 @@ class RateLimitingMiddleware
     {
         $currentMinute = floor(time() / 60);
         $key = $identifier . '_' . $currentMinute;
-        
+
         unset(static::$counters[$key]);
     }
 
@@ -108,11 +108,11 @@ class RateLimitingMiddleware
     protected function cleanup()
     {
         $currentMinute = floor(time() / 60);
-        
+
         foreach (static::$counters as $key => $count) {
             $parts = explode('_', $key);
             $minute = end($parts);
-            
+
             // Remove counters older than current minute
             if ($minute < $currentMinute) {
                 unset(static::$counters[$key]);

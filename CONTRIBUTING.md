@@ -119,7 +119,7 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Class description
- * 
+ *
  * Detailed description of what this class does
  */
 class YourClass
@@ -167,7 +167,7 @@ class YourClass
  * @return array Results array with success/failure status
  * @throws \InvalidArgumentException When recipients array is empty
  * @throws \Exception When SMS service is unavailable
- * 
+ *
  * @example
  * $results = $service->sendBulkSms(['09123456789'], 'Hello World!');
  * foreach ($results as $number => $result) {
@@ -198,10 +198,10 @@ class YourFeatureTest extends TestCase
     {
         // Arrange
         $input = 'test data';
-        
+
         // Act
         $result = $this->yourService->performAction($input);
-        
+
         // Assert
         $this->assertEquals('expected', $result);
     }
@@ -210,7 +210,7 @@ class YourFeatureTest extends TestCase
     public function it_handles_errors_gracefully()
     {
         $this->expectException(\InvalidArgumentException::class);
-        
+
         $this->yourService->performAction(null);
     }
 }
@@ -230,7 +230,7 @@ class YourFeatureTest extends TestCase
 public function setUp(): void
 {
     parent::setUp();
-    
+
     $this->mockAmiConnection();
 }
 
@@ -320,22 +320,27 @@ public function handleYourEvent($event)
 
 ### Bug Report Template:
 
-```markdown
+````markdown
 ## Bug Description
+
 Brief description of the bug
 
 ## Steps to Reproduce
+
 1. Step 1
 2. Step 2
 3. Step 3
 
 ## Expected Behavior
+
 What you expected to happen
 
 ## Actual Behavior
+
 What actually happened
 
 ## Environment
+
 - PHP Version: 8.1
 - Laravel Version: 9.0
 - AMI Package Version: 1.0.0
@@ -343,18 +348,23 @@ What actually happened
 - Asterisk Version: 18.0
 
 ## Configuration
+
 ```php
 // Relevant configuration settings
 ```
+````
 
 ## Logs
+
 ```
 Error logs or debug output
 ```
 
 ## Additional Context
+
 Any other relevant information
-```
+
+````
 
 ## 🔄 Pull Request Process
 
@@ -368,7 +378,7 @@ git rebase upstream/main
 # Run all checks
 composer test
 composer phpcs
-```
+````
 
 ### 2. Pull Request Checklist
 
@@ -383,9 +393,11 @@ composer phpcs
 
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Documentation update
@@ -393,24 +405,29 @@ Brief description of changes
 - [ ] Refactoring
 
 ## Changes Made
+
 - Change 1
 - Change 2
 - Change 3
 
 ## Testing
+
 - [ ] Unit tests added/updated
 - [ ] Integration tests added/updated
 - [ ] Manual testing completed
 
 ## Documentation
+
 - [ ] README updated
 - [ ] Code comments added
 - [ ] Examples provided
 
 ## Breaking Changes
+
 None / List any breaking changes
 
 ## Related Issues
+
 Fixes #123
 ```
 
@@ -453,6 +470,7 @@ We especially welcome contributions from Iranian developers. Feel free to commun
 ### Contributors
 
 All contributors will be recognized in:
+
 - README.md Contributors section
 - GitHub Contributors page
 - Release notes

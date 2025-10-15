@@ -79,10 +79,9 @@ class BulkSmsService
                         'timestamp' => now()->toISOString()
                     ];
                     $success = true;
-
                 } catch (\Exception $e) {
                     $retries++;
-                    
+
                     if ($retries >= $this->maxRetries) {
                         $results[$number] = [
                             'status' => 'error',
@@ -166,14 +165,14 @@ class BulkSmsService
     {
         // This would query AMI for SMS status
         $reports = [];
-        
+
         foreach ($messageIds as $messageId) {
             try {
                 $result = Artisan::call('ami:action', array_merge([
                     'action' => 'DongleSMSStatus',
                     '--arguments' => ['MessageId' => $messageId]
                 ], $this->connectionOptions));
-                
+
                 $reports[$messageId] = $result;
             } catch (\Exception $e) {
                 $reports[$messageId] = ['error' => $e->getMessage()];
@@ -235,7 +234,7 @@ class BulkSmsService
     {
         // Remove any non-digit characters except +
         $number = preg_replace('/[^\d+]/', '', $number);
-        
+
         // Convert to international format
         if (substr($number, 0, 1) === '0') {
             $number = '+98' . substr($number, 1);

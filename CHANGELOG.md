@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - 🚀 Enhanced README with comprehensive documentation in Persian and English
 - 🔧 Standalone CLI tool (`bin/ami`) for usage without Laravel
 - 💾 Connection pooling and management with `ConnectionManager` class
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🚀 Performance optimizations with caching and async processing
 
 ### Enhanced
+
 - 📖 README documentation with:
   - Step-by-step installation guide
   - Comprehensive usage examples
@@ -39,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Development/debugging features
 
 ### Technical Improvements
+
 - 🏗️ Better code organization with service classes
 - 🔄 Asynchronous processing capabilities
 - 📊 Connection health monitoring
@@ -49,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - Previous Release
 
 ### Added
+
 - Basic AMI connection functionality
 - SMS sending via Chan Dongle
 - USSD command support
@@ -57,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Laravel service provider integration
 
 ### Features
+
 - Connect to Asterisk/Issabel AMI
 - Send and receive SMS messages
 - Execute USSD commands
@@ -71,17 +76,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### From 1.0.x to 2.0.x (Future Release)
 
 #### Breaking Changes
+
 None currently planned - maintaining backward compatibility.
 
 #### New Features Available
 
 1. **Enhanced Configuration**
+
    ```bash
    # Publish new configuration file
    php artisan vendor:publish --tag=ami --force
    ```
 
 2. **Connection Pooling**
+
    ```php
    // Enable in config/ami.php
    'connection' => [
@@ -91,46 +99,52 @@ None currently planned - maintaining backward compatibility.
    ```
 
 3. **Service Classes**
+
    ```php
    // Use new service classes
    use Shahkochaki\Ami\Services\CallManager;
    use Shahkochaki\Ami\Services\BulkSmsService;
-   
+
    $callManager = new CallManager();
    $smsService = new BulkSmsService();
    ```
 
 4. **Facade Usage**
+
    ```php
    // Add to config/app.php aliases
    'Ami' => Shahkochaki\Ami\Facades\Ami::class,
-   
+
    // Use facade
    Ami::makeCall('1001', '1002');
    Ami::sendSms('09123456789', 'Hello!');
    ```
 
 5. **Background Jobs**
+
    ```php
    // Queue bulk SMS processing
    use Shahkochaki\Ami\Jobs\BulkSmsJob;
-   
+
    BulkSmsJob::dispatch($recipients, $message, $options);
    ```
 
 #### Migration Steps
 
 1. **Update Composer**
+
    ```bash
    composer update shahkochaki/ami
    ```
 
 2. **Publish New Assets**
+
    ```bash
    php artisan vendor:publish --tag=ami --force
    ```
 
 3. **Update Environment Variables**
+
    ```env
    # Add new variables to .env
    AMI_ENABLE_POOLING=true
@@ -140,10 +154,11 @@ None currently planned - maintaining backward compatibility.
    ```
 
 4. **Register Event Listeners (Optional)**
+
    ```php
    // In a service provider
    use Shahkochaki\Ami\Listeners\AmiEventListener;
-   
+
    public function boot()
    {
        $listener = new AmiEventListener();
@@ -152,14 +167,15 @@ None currently planned - maintaining backward compatibility.
    ```
 
 5. **Update Code (Optional)**
+
    ```php
    // Old way (still works)
    Artisan::call('ami:action', ['action' => 'Status']);
-   
+
    // New way (recommended)
    $callManager = new CallManager();
    $callManager->getChannelStatus();
-   
+
    // Or using facade
    Ami::getChannelStatus();
    ```
@@ -167,6 +183,7 @@ None currently planned - maintaining backward compatibility.
 ### Configuration Changes
 
 #### Enhanced Config Structure
+
 ```php
 // config/ami.php - New structure
 return [
@@ -174,18 +191,18 @@ return [
     'port' => env('AMI_PORT', 5038),
     'username' => env('AMI_USERNAME'),
     'secret' => env('AMI_SECRET'),
-    
+
     'connection' => [
         'enable_pooling' => env('AMI_ENABLE_POOLING', true),
         'max_connections' => env('AMI_MAX_CONNECTIONS', 5),
         'timeout' => env('AMI_CONNECTION_TIMEOUT', 10),
     ],
-    
+
     'logging' => [
         'enabled' => env('AMI_LOGGING_ENABLED', true),
         'channel' => env('AMI_LOG_CHANNEL', 'ami'),
     ],
-    
+
     // ... more options
 ];
 ```
@@ -244,6 +261,7 @@ AMI_MOCK_RESPONSES=false
 ### Support
 
 For help with upgrading:
+
 - Check the documentation: [README.md](README.md)
 - Review the test files for examples
 - Open an issue on GitHub

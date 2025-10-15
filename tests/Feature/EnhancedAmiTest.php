@@ -126,7 +126,7 @@ class EnhancedAmiTest extends TestCase
     public function testConfigurationLoading()
     {
         $config = config('ami');
-        
+
         $this->assertArrayHasKey('host', $config);
         $this->assertArrayHasKey('port', $config);
         $this->assertArrayHasKey('dongle', $config);
@@ -141,15 +141,15 @@ class EnhancedAmiTest extends TestCase
         $this->assertTrue(
             app()->bound('command.ami.listen')
         );
-        
+
         $this->assertTrue(
             app()->bound('command.ami.action')
         );
-        
+
         $this->assertTrue(
             app()->bound('command.ami.dongle.sms')
         );
-        
+
         $this->assertTrue(
             app()->bound('command.ami.dongle.ussd')
         );
@@ -199,7 +199,7 @@ class PerformanceTest extends TestCase
         }
 
         $startTime = microtime(true);
-        
+
         // This would normally use the BulkSmsService
         foreach ($recipients as $recipient) {
             $this->artisan('ami:dongle:sms', [
@@ -208,10 +208,10 @@ class PerformanceTest extends TestCase
                 'device' => 'dongle0'
             ]);
         }
-        
+
         $endTime = microtime(true);
         $duration = $endTime - $startTime;
-        
+
         // Assert that it completes within reasonable time
         $this->assertLessThan(60, $duration, 'Bulk SMS should complete within 60 seconds');
     }
@@ -222,17 +222,17 @@ class PerformanceTest extends TestCase
     public function testConnectionPoolingPerformance()
     {
         $startTime = microtime(true);
-        
+
         // Multiple quick requests
         for ($i = 0; $i < 5; $i++) {
             $this->artisan('ami:action', [
                 'action' => 'Ping'
             ]);
         }
-        
+
         $endTime = microtime(true);
         $duration = $endTime - $startTime;
-        
+
         // With connection pooling, this should be faster
         $this->assertLessThan(10, $duration, 'Multiple requests should complete quickly with pooling');
     }

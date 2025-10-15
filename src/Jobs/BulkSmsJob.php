@@ -68,16 +68,16 @@ class BulkSmsJob implements ShouldQueue
             $connectionOptions = $this->options['connection'] ?? [];
 
             $smsService = new BulkSmsService($device, $connectionOptions);
-            
+
             // Set additional options if provided
             if (isset($this->options['delay'])) {
                 $smsService->setDelay($this->options['delay']);
             }
-            
+
             if (isset($this->options['max_retries'])) {
                 $smsService->setMaxRetries($this->options['max_retries']);
             }
-            
+
             if (isset($this->options['pdu_threshold'])) {
                 $smsService->setPduThreshold($this->options['pdu_threshold']);
             }
@@ -89,10 +89,10 @@ class BulkSmsJob implements ShouldQueue
             );
 
             // Log results
-            $successCount = count(array_filter($results, function($result) {
+            $successCount = count(array_filter($results, function ($result) {
                 return $result['status'] === 'success';
             }));
-            
+
             $failureCount = count($this->recipients) - $successCount;
 
             Log::info('Bulk SMS job completed', [
@@ -110,7 +110,6 @@ class BulkSmsJob implements ShouldQueue
                 'message' => $this->message,
                 'options' => $this->options,
             ]);
-
         } catch (\Exception $e) {
             Log::error('Bulk SMS job failed', [
                 'error' => $e->getMessage(),

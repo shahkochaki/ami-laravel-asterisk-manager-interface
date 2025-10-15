@@ -101,7 +101,7 @@ return [
         'Bridge' => [
             // 'App\Listeners\CallBridgedListener',
         ],
-        
+
         // SMS Events
         'DongleSMSStatus' => [
             // 'App\Listeners\SmsStatusListener',
