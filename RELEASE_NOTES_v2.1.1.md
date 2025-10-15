@@ -11,22 +11,26 @@
 ## 📦 **What's New**
 
 ### 🗑️ **Dependency Optimization**
+
 - **Reduced package size by 20%** for faster installation
 - Removed unnecessary dependencies that weren't actively used in the codebase
 - Streamlined development dependencies for cleaner builds
 
 ### ❌ **Removed Dependencies**
+
 - `react/stream` - Not directly used in codebase
 - `react/socket` - Replaced with more specific `react/socket-client`
 - `illuminate/config` - Only used in development/testing
 - `illuminate/container` - Only used in development/testing
 
 ### 🔄 **Updated Dependencies**
+
 - Replaced `react/socket` with `react/socket-client` for better compatibility
 - Focused Laravel support on versions 9-10 for optimal stability
 - Maintained all core functionality while reducing overhead
 
 ### 📏 **Package Structure**
+
 - Removed `version` field from composer.json (Packagist best practice)
 - Simplified scripts section, removed potentially problematic post-install commands
 - Maintained all essential features and CLI tools
@@ -44,6 +48,7 @@ composer require shahkochaki/ami-laravel-asterisk-manager-interface:^2.1.1
 ## 📋 **Final Dependencies**
 
 ### **Runtime (10 packages)**
+
 - `php: >=8.0`
 - `ext-mbstring`
 - `illuminate/support: ^9.0|^10.0`
@@ -56,6 +61,7 @@ composer require shahkochaki/ami-laravel-asterisk-manager-interface:^2.1.1
 - `jackkum/phppdu: ^1.2`
 
 ### **Development (2 packages)**
+
 - `friendsofphp/php-cs-fixer: ^3.0`
 - `phpunit/phpunit: ^9.0|^10.0`
 
@@ -108,4 +114,4 @@ All existing functionality remains exactly the same.
 
 **Happy coding!** 🚀
 
-*Team Shahkochaki AMI*
+_Team Shahkochaki AMI_
