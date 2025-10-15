@@ -5,6 +5,21 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.3] - 2025-10-16
+
+### Fixed
+
+- 🔧 **Critical Dependency Fix**: Replaced abandoned `react/socket-client` with `react/socket`
+- ⚠️ **Package Security**: Fixed dependency on abandoned package that caused installation failures
+- 🔄 **Updated Implementation**: Migrated from `react/socket-client@^0.8` (non-existent) to `react/socket@^1.0`
+- 📦 **API Migration**: Updated all socket connector implementations to use new React Socket API
+
+### Changed
+
+- Replaced `React\SocketClient\Connector` with `React\Socket\Connector`
+- Removed `React\SocketClient\ConnectorInterface` usage
+- Updated Factory and EnhancedFactory classes for new socket API
+
 ## [2.1.2] - 2025-10-16
 
 ### Added

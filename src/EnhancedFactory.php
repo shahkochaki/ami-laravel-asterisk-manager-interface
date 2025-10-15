@@ -7,7 +7,7 @@ use Clue\React\Ami\Client;
 use Illuminate\Support\Arr;
 use Clue\React\Ami\ActionSender;
 use React\EventLoop\LoopInterface;
-use React\SocketClient\ConnectorInterface;
+use React\Socket\Connector;
 use React\Promise\Promise;
 use Exception;
 use function React\Promise\resolve;

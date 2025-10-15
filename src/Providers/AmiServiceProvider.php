@@ -6,13 +6,12 @@ use Shahkochaki\Ami\Factory;
 use Shahkochaki\Ami\Commands\AmiCli;
 use Shahkochaki\Ami\Commands\AmiSms;
 use Shahkochaki\Ami\Commands\AmiUssd;
-use React\SocketClient\Connector;
+use React\Socket\Connector;
 use Shahkochaki\Ami\Commands\AmiAction;
 use Shahkochaki\Ami\Commands\AmiListen;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\StreamSelectLoop;
 use Illuminate\Support\ServiceProvider;
-use React\SocketClient\ConnectorInterface;
 use React\Dns\Resolver\Factory as DnsResolver;
 
 class AmiServiceProvider extends ServiceProvider
@@ -129,12 +128,12 @@ class AmiServiceProvider extends ServiceProvider
      */
     protected function registerConnector()
     {
-        $this->app->singleton(ConnectorInterface::class, function ($app) {
+        $this->app->singleton(Connector::class, function ($app) {
             $loop = $app[LoopInterface::class];
 
-            return new Connector($loop, (new DnsResolver())->create('8.8.8.8', $loop));
+            return new Connector($loop);
         });
-        $this->app->alias(ConnectorInterface::class, 'ami.connector');
+        $this->app->alias(Connector::class, 'ami.connector');
     }
 
     /**
@@ -143,7 +142,7 @@ class AmiServiceProvider extends ServiceProvider
     protected function registerFactory()
     {
         $this->app->singleton(Factory::class, function ($app) {
-            return new Factory($app[LoopInterface::class], $app[ConnectorInterface::class]);
+            return new Factory($app[LoopInterface::class], $app[Connector::class]);
         });
         $this->app->alias(Factory::class, 'ami.factory');
     }

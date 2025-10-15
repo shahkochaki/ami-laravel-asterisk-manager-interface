@@ -7,7 +7,7 @@ use Clue\React\Ami\Client;
 use Illuminate\Support\Arr;
 use Clue\React\Ami\ActionSender;
 use React\EventLoop\LoopInterface;
-use React\SocketClient\ConnectorInterface;
+use React\Socket\Connector;
 
 class Factory
 {
@@ -17,15 +17,15 @@ class Factory
     protected $loop;
 
     /**
-     * @var \React\SocketClient\ConnectorInterface
+     * @var \React\Socket\Connector
      */
     protected $connector;
 
     /**
      * @param \React\EventLoop\LoopInterface         $loop
-     * @param \React\SocketClient\ConnectorInterface $connector
+     * @param \React\Socket\Connector $connector
      */
-    public function __construct(LoopInterface $loop, ConnectorInterface $connector)
+    public function __construct(LoopInterface $loop, Connector $connector)
     {
         $this->connector = $connector;
         $this->loop = $loop;
