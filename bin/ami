@@ -1,0 +1,89 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * AMI Standalone CLI Tool
+ * 
+ * This file allows you to run AMI commands without Laravel
+ * Usage: php bin/ami [command] [options]
+ */
+
+// Find autoloader
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+    __DIR__ . '/../../../../autoload.php',
+];
+
+$autoloaderFound = false;
+foreach ($autoloadPaths as $autoloadPath) {
+    if (file_exists($autoloadPath)) {
+        require_once $autoloadPath;
+        $autoloaderFound = true;
+        break;
+    }
+}
+
+if (!$autoloaderFound) {
+    echo "Autoloader not found. Please run 'composer install' first.\n";
+    exit(1);
+}
+
+use Illuminate\Container\Container;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Console\Application;
+use React\EventLoop\StreamSelectLoop;
+use React\SocketClient\Connector;
+use React\Dns\Resolver\Factory as DnsResolver;
+use Shahkochaki\Ami\Factory;
+use Shahkochaki\Ami\Commands\AmiAction;
+use Shahkochaki\Ami\Commands\AmiCli;
+use Shahkochaki\Ami\Commands\AmiListen;
+use Shahkochaki\Ami\Commands\AmiSms;
+use Shahkochaki\Ami\Commands\AmiUssd;
+
+// Create container
+$container = new Container();
+
+// Create event dispatcher
+$dispatcher = new Dispatcher($container);
+
+// Create event loop
+$loop = new StreamSelectLoop();
+
+// Create DNS resolver
+$dnsResolverFactory = new DnsResolver();
+$dns = $dnsResolverFactory->createCached('8.8.8.8', $loop);
+
+// Create connector
+$connector = new Connector($loop, $dns);
+
+// Create AMI factory
+$factory = new Factory($loop, $connector);
+
+// Default configuration
+$config = [
+    'host' => '127.0.0.1',
+    'port' => 5038,
+    'username' => null,
+    'secret' => null,
+    'dongle' => [
+        'sms' => [
+            'device' => null,
+        ],
+    ],
+    'events' => [],
+];
+
+// Create console application
+$app = new Application('AMI CLI Tool', '1.0.0');
+
+// Register commands
+$app->add(new AmiAction($dispatcher, $loop, $factory, $config));
+$app->add(new AmiCli($dispatcher, $loop, $factory, $config));
+$app->add(new AmiListen($dispatcher, $loop, $factory, $config));
+$app->add(new AmiSms($dispatcher, $loop, $factory, $config));
+$app->add(new AmiUssd($dispatcher, $loop, $factory, $config));
+
+// Run application
+$app->run();
