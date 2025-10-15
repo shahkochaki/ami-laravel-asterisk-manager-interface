@@ -11,11 +11,13 @@
 ## 🎯 **What's New**
 
 ### 🚀 **Laravel 12 Support**
+
 - Added full compatibility with Laravel 12.x
 - Maintained backward compatibility with Laravel 9.x and 10.x
 - Updated package metadata and keywords
 
 ### 📝 **Package Updates**
+
 - Updated package description to reflect Laravel 9-12 support
 - Added `laravel10` and `laravel12` keywords for better discoverability
 - Removed version field from composer.json (following Packagist best practices)
@@ -50,4 +52,4 @@ composer update shahkochaki/ami-laravel-asterisk-manager-interface
 
 **Enjoy Laravel 12 compatibility!** 🎉
 
-*Team Shahkochaki AMI*
+_Team Shahkochaki AMI_
