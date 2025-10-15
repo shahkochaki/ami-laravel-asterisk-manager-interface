@@ -5,6 +5,22 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2025-10-15
+
+### Changed
+
+- 🗑️ **Optimized Dependencies**: Removed unnecessary packages to reduce installation size
+- ❌ **Removed Packages**: `react/stream`, `react/socket`, `illuminate/config`, `illuminate/container`
+- 🔄 **Updated Packages**: Replaced `react/socket` with `react/socket-client` for better compatibility
+- 📦 **Simplified Scripts**: Removed potentially problematic post-install and post-update commands
+- 🎯 **Laravel Support**: Focused on Laravel 9-10 for better stability (removed Laravel 11 support temporarily)
+- 📏 **Package Size**: Reduced dependencies by 20% for faster installation
+
+### Removed
+
+- Removed `version` field from composer.json as recommended by Packagist
+- Removed `post-install-cmd` and `post-update-cmd` scripts
+
 ## [2.0.1] - 2025-10-15
 
 ### Added
