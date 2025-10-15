@@ -18,7 +18,7 @@
         "php8",
         "laravel9"
     ],
-    "homepage": "https://github.com/shahkochaki/ami",
+    "homepage": "https://github.com/shahkochaki/ami-laravel-asterisk-manager-interface",
     "authors": [
         {
             "name": "Ali Shahkochaki",
