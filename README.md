@@ -28,11 +28,20 @@ A powerful and easy-to-use Laravel package for connecting to VOIP servers on the
 
 ## 📋 Requirements
 
-- PHP >= 5.6.0
-- Laravel >= 5.1
+- PHP >= 8.0
+- Laravel >= 9.0
 - Asterisk/Issabel server with AMI enabled
 - Chan Dongle (for SMS and USSD functionality)
 - Extension `ext-mbstring`
+
+## 🔄 Version Compatibility
+
+| Package Version | PHP Version | Laravel Version | Status |
+|-----------------|-------------|-----------------|--------|
+| 2.x | 8.0+ | 9.0+ | ✅ Current |
+| 1.x | 5.6+ | 5.1+ | ⚠️ Legacy |
+
+**Note**: Version 2.x includes modern PHP features like typed properties, match expressions, and improved performance.
 
 ## 🚀 Installation
 
@@ -50,7 +59,9 @@ composer require shahkochaki/ami:dev-master
 
 ### Step 2: Register Service Provider
 
-Add to your `config/app.php` in the `providers` array:
+**For Laravel 9+:** The service provider will be automatically discovered.
+
+**For older versions:** Add to your `config/app.php` in the `providers` array:
 
 ```php
 'providers' => [
@@ -66,6 +77,36 @@ php artisan vendor:publish --tag=ami
 ```
 
 This will create the `config/ami.php` configuration file.
+
+## 🔄 Upgrading from v1.x
+
+If you're upgrading from an older version that supported PHP 5.6+ and Laravel 5.1+:
+
+### 1. Update PHP and Laravel
+
+```bash
+# Make sure you have PHP 8.0+ and Laravel 9.0+
+php --version
+php artisan --version
+```
+
+### 2. Update the package
+
+```bash
+composer require shahkochaki/ami
+```
+
+### 3. Update your code
+
+- Replace `array_get()` helper with `Arr::get()`
+- Update event listener syntax if needed
+- Check deprecated Laravel features
+
+### 4. Test thoroughly
+
+```bash
+php artisan ami:action Ping
+```
 
 ## ⚙️ Configuration
 
@@ -103,20 +144,20 @@ return [
     'port' => env('AMI_PORT', 5038),
     'username' => env('AMI_USERNAME', 'myuser'),
     'secret' => env('AMI_SECRET', 'mypassword'),
-    
+
     'dongle' => [
         'sms' => [
             'device' => env('AMI_SMS_DEVICE', 'dongle0'),
         ],
     ],
-    
+
     'events' => [
         // Event handlers configuration
         'Dial' => [
             // Custom event handlers
         ],
         'Hangup' => [
-            // Custom event handlers  
+            // Custom event handlers
         ],
         // More events...
     ],
@@ -223,7 +264,7 @@ Artisan::call('ami:dongle:sms', [
 
 // Send long SMS
 Artisan::call('ami:dongle:sms', [
-    'number' => '09123456789', 
+    'number' => '09123456789',
     'message' => 'Long message...',
     '--pdu' => true
 ]);
@@ -311,7 +352,7 @@ class CallManager
             ]
         ]);
     }
-    
+
     public function hangupCall($channel)
     {
         return Artisan::call('ami:action', [
@@ -321,7 +362,7 @@ class CallManager
             ]
         ]);
     }
-    
+
     public function getChannelStatus()
     {
         return Artisan::call('ami:action', [
@@ -344,16 +385,16 @@ use Illuminate\Support\Collection;
 class BulkSmsService
 {
     protected $device;
-    
+
     public function __construct($device = null)
     {
         $this->device = $device ?: config('ami.dongle.sms.device');
     }
-    
+
     public function sendBulkSms(Collection $recipients, string $message)
     {
         $results = [];
-        
+
         foreach ($recipients as $number) {
             try {
                 $result = Artisan::call('ami:dongle:sms', [
@@ -362,17 +403,17 @@ class BulkSmsService
                     'device' => $this->device,
                     '--pdu' => strlen($message) > 160
                 ]);
-                
+
                 $results[$number] = ['status' => 'success', 'result' => $result];
-                
+
                 // Small delay between messages
                 usleep(500000); // 0.5 second
-                
+
             } catch (\Exception $e) {
                 $results[$number] = ['status' => 'error', 'message' => $e->getMessage()];
             }
         }
-        
+
         return $results;
     }
 }
@@ -392,18 +433,22 @@ The library supports all standard Asterisk events:
 
 ### Common Issues
 
-1. **Connection Error**: 
+1. **Connection Error**:
+
    ```
    Connection refused
    ```
+
    - Check that Asterisk is running
    - Verify port 5038 is open
    - Check firewall settings
 
 2. **Authentication Error**:
+
    ```
    Authentication failed
    ```
+
    - Verify username and password
    - Check AMI user permissions
 
@@ -493,6 +538,7 @@ This project is licensed under the [MIT License](LICENSE.md).
 ## 👨‍💻 Author
 
 **Ali Shahkochaki**
+
 - Website: [shahkochaki.ir](https://shahkochaki.ir)
 - Email: ali.shahkochaki7@gmail.com
 - GitHub: [@shahkochaki](https://github.com/shahkochaki)
@@ -540,11 +586,20 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ## 📋 پیش‌نیازها
 
-- PHP >= 5.6.0
-- Laravel >= 5.1
+- PHP >= 8.0
+- Laravel >= 9.0
 - سرور Asterisk/Issabel با AMI فعال
 - Chan Dongle (برای عملکرد SMS و USSD)
 - Extension `ext-mbstring`
+
+## 🔄 سازگاری نسخه‌ها
+
+| نسخه پکیج | نسخه PHP | نسخه Laravel | وضعیت |
+|-----------|----------|-------------|--------|
+| 2.x | 8.0+ | 9.0+ | ✅ فعلی |
+| 1.x | 5.6+ | 5.1+ | ⚠️ قدیمی |
+
+**توجه**: نسخه 2.x شامل ویژگی‌های مدرن PHP مانند typed properties، match expressions و بهبود عملکرد است.
 
 ## 🚀 نصب
 
@@ -562,7 +617,9 @@ composer require shahkochaki/ami:dev-master
 
 ### گام 2: ثبت Service Provider
 
-در فایل `config/app.php` در آرایه `providers` اضافه کنید:
+**برای Laravel 9+:** Service provider به صورت خودکار تشخیص داده می‌شود.
+
+**برای نسخه‌های قدیمی‌تر:** در فایل `config/app.php` در آرایه `providers` اضافه کنید:
 
 ```php
 'providers' => [
@@ -578,6 +635,36 @@ php artisan vendor:publish --tag=ami
 ```
 
 این دستور فایل `config/ami.php` را ایجاد می‌کند.
+
+## 🔄 ارتقا از نسخه v1.x
+
+اگر از نسخه قدیمی که از PHP 5.6+ و Laravel 5.1+ پشتیبانی می‌کرد، ارتقا می‌دهید:
+
+### 1. به‌روزرسانی PHP و Laravel
+
+```bash
+# مطمئن شوید که PHP 8.0+ و Laravel 9.0+ دارید
+php --version
+php artisan --version
+```
+
+### 2. به‌روزرسانی پکیج
+
+```bash
+composer require shahkochaki/ami
+```
+
+### 3. به‌روزرسانی کد شما
+
+- `array_get()` helper را با `Arr::get()` جایگزین کنید
+- syntax event listener را در صورت نیاز به‌روزرسانی کنید
+- ویژگی‌های deprecated Laravel را بررسی کنید
+
+### 4. تست کامل
+
+```bash
+php artisan ami:action Ping
+```
 
 ## ⚙️ تنظیمات
 
@@ -613,13 +700,13 @@ return [
     'port' => env('AMI_PORT', 5038),
     'username' => env('AMI_USERNAME', 'myuser'),
     'secret' => env('AMI_SECRET', 'mypassword'),
-    
+
     'dongle' => [
         'sms' => [
             'device' => env('AMI_SMS_DEVICE', 'dongle0'),
         ],
     ],
-    
+
     'events' => [
         // تنظیمات مدیریت رویدادها
         'Dial' => [
@@ -733,7 +820,7 @@ Artisan::call('ami:dongle:sms', [
 
 // ارسال SMS طولانی
 Artisan::call('ami:dongle:sms', [
-    'number' => '09123456789', 
+    'number' => '09123456789',
     'message' => 'پیام طولانی...',
     '--pdu' => true
 ]);
@@ -821,7 +908,7 @@ class CallManager
             ]
         ]);
     }
-    
+
     public function hangupCall($channel)
     {
         return Artisan::call('ami:action', [
@@ -831,7 +918,7 @@ class CallManager
             ]
         ]);
     }
-    
+
     public function getChannelStatus()
     {
         return Artisan::call('ami:action', [
@@ -854,16 +941,16 @@ use Illuminate\Support\Collection;
 class BulkSmsService
 {
     protected $device;
-    
+
     public function __construct($device = null)
     {
         $this->device = $device ?: config('ami.dongle.sms.device');
     }
-    
+
     public function sendBulkSms(Collection $recipients, string $message)
     {
         $results = [];
-        
+
         foreach ($recipients as $number) {
             try {
                 $result = Artisan::call('ami:dongle:sms', [
@@ -872,17 +959,17 @@ class BulkSmsService
                     'device' => $this->device,
                     '--pdu' => strlen($message) > 160
                 ]);
-                
+
                 $results[$number] = ['status' => 'success', 'result' => $result];
-                
+
                 // تأخیر کوتاه بین ارسال پیام‌ها
                 usleep(500000); // نیم ثانیه
-                
+
             } catch (\Exception $e) {
                 $results[$number] = ['status' => 'error', 'message' => $e->getMessage()];
             }
         }
-        
+
         return $results;
     }
 }
@@ -902,18 +989,22 @@ class BulkSmsService
 
 ### مشکلات رایج
 
-1. **خطای اتصال**: 
+1. **خطای اتصال**:
+
    ```
    Connection refused
    ```
+
    - بررسی کنید که Asterisk در حال اجرا باشد
    - پورت 5038 باز باشد
    - تنظیمات فایروال را بررسی کنید
 
 2. **خطای احراز هویت**:
+
    ```
    Authentication failed
    ```
+
    - نام کاربری و رمز عبور را بررسی کنید
    - دسترسی‌های کاربر AMI را بررسی کنید
 
@@ -1003,6 +1094,7 @@ tests/                # فایل‌های تست
 ## 👨‍💻 سازنده
 
 **علی شاهکچکی**
+
 - وب‌سایت: [shahkochaki.ir](https://shahkochaki.ir)
 - ایمیل: ali.shahkochaki7@gmail.com
 - گیت‌هاب: [@shahkochaki](https://github.com/shahkochaki)
@@ -1024,7 +1116,7 @@ tests/                # فایل‌های تست
 ⭐ اگر این پروژه برایتان مفید بود، لطفاً ستاره بدهید!
 
 **Made with ❤️ for Iranian developers**
-    'secret' => env('AMI_SECRET', 'mypassword'),
+'secret' => env('AMI_SECRET', 'mypassword'),
 
     'dongle' => [
         'sms' => [
@@ -1042,8 +1134,10 @@ tests/                # فایل‌های تست
         ],
         // More events...
     ],
+
 ];
-```
+
+````
 
 ### متغیرهای محیطی (.env)
 
@@ -1053,7 +1147,7 @@ AMI_PORT=5038
 AMI_USERNAME=myuser
 AMI_SECRET=mypassword
 AMI_SMS_DEVICE=dongle0
-```
+````
 
 ## 🎯 استفاده / Usage
 
