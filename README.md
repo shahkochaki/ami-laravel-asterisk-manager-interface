@@ -36,10 +36,10 @@ A powerful and easy-to-use Laravel package for connecting to VOIP servers on the
 
 ## 🔄 Version Compatibility
 
-| Package Version | PHP Version | Laravel Version | Status |
-|-----------------|-------------|-----------------|--------|
-| 2.x | 8.0+ | 9.0+ | ✅ Current |
-| 1.x | 5.6+ | 5.1+ | ⚠️ Legacy |
+| Package Version | PHP Version | Laravel Version | Status     |
+| --------------- | ----------- | --------------- | ---------- |
+| 2.x             | 8.0+        | 9.0+            | ✅ Current |
+| 1.x             | 5.6+        | 5.1+            | ⚠️ Legacy  |
 
 **Note**: Version 2.x includes modern PHP features like typed properties, match expressions, and improved performance.
 
@@ -594,10 +594,10 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ## 🔄 سازگاری نسخه‌ها
 
-| نسخه پکیج | نسخه PHP | نسخه Laravel | وضعیت |
-|-----------|----------|-------------|--------|
-| 2.x | 8.0+ | 9.0+ | ✅ فعلی |
-| 1.x | 5.6+ | 5.1+ | ⚠️ قدیمی |
+| نسخه پکیج | نسخه PHP | نسخه Laravel | وضعیت    |
+| --------- | -------- | ------------ | -------- |
+| 2.x       | 8.0+     | 9.0+         | ✅ فعلی  |
+| 1.x       | 5.6+     | 5.1+         | ⚠️ قدیمی |
 
 **توجه**: نسخه 2.x شامل ویژگی‌های مدرن PHP مانند typed properties، match expressions و بهبود عملکرد است.
 
