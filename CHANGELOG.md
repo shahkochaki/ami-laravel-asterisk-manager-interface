@@ -5,6 +5,18 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.2] - 2025-10-16
+
+### Added
+
+- 🚀 **Laravel 12 Support**: Added compatibility with Laravel 12.x
+- 📝 **Updated Documentation**: Updated package description and keywords for Laravel 12
+
+### Changed
+
+- 🔄 **Laravel Versions**: Now supports Laravel 9.x, 10.x, and 12.x
+- 📦 **Package Keywords**: Added laravel10 and laravel12 keywords for better discoverability
+
 ## [2.1.1] - 2025-10-15
 
 ### Changed
