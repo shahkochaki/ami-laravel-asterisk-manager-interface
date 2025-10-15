@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.1] - 2025-10-15
 
 ### Added
+
 - 🚀 **Modern PHP Support**: Updated to PHP 8.0+ and Laravel 9.0+
 - 📚 **Enhanced Documentation**: Comprehensive bilingual documentation (English/Persian)
 - 🔧 **Standalone CLI**: Added `bin/ami` for usage without Laravel
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🚀 **Performance**: Caching and async processing optimizations
 
 ### Changed
+
 - ⬆️ **PHP Requirement**: Updated from 5.6+ to 8.0+
 - ⬆️ **Laravel Requirement**: Updated from 5.1+ to 9.0+
 - 📦 **Dependencies**: Updated all dependencies to modern versions
@@ -31,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 📖 **Documentation**: Complete rewrite with better structure and examples
 
 ### Enhanced
+
 - 📖 **Documentation**:
   - Step-by-step installation guide
   - Comprehensive usage examples
@@ -45,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Performance tuning options
 
 ### Technical Improvements
+
 - 🏗️ Better code organization with service classes
 - 🔄 Asynchronous processing capabilities
 - 📊 Connection health monitoring
