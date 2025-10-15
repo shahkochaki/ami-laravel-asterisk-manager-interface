@@ -1,36 +1,552 @@
-# 📞 AMI - Laravel Asterisk Manager Interface
+# AMI - Laravel Asterisk Manager Interface
+
+<div align="center">
+  
+![AMI Logo](https://raw.githubusercontent.com/shahkochaki/ami/main/logo.png)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
 [![Total Downloads](https://img.shields.io/packagist/dt/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
 [![License](https://img.shields.io/packagist/l/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
 [![PHP Version](https://img.shields.io/packagist/php-v/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
 
-یک کتابخانه قدرتمند و آسان برای اتصال سرورهای Laravel به سرورهای VOIP بر روی پلتفرم Issabel و Asterisk از طریق Asterisk Manager Interface (AMI).
+</div>
 
 A powerful and easy-to-use Laravel package for connecting to VOIP servers on the Issabel and Asterisk platform via Asterisk Manager Interface (AMI).
 
-## ✨ امکانات اصلی / Key Features
+## ✨ Key Features
 
-- 🔗 **اتصال آسان به AMI** - Easy AMI connection management
-- 📱 **ارسال SMS** - Send SMS via Chan Dongle
-- 📞 **کنترل تماس‌ها** - Call control and monitoring
-- 🎧 **مدیریت صف تماس** - Queue management
-- 📊 **مانیتورینگ real-time** - Real-time event monitoring
-- 🔧 **دستورات CLI** - CLI commands for easy management
-- 📋 **رابط کاربری CLI** - Interactive CLI interface
-- 🌐 **پشتیبانی از USSD** - USSD command support
-- ⚡ **Async Processing** - Asynchronous event handling با ReactPHP
-- 🔒 **امنیت بالا** - Secure authentication and connection management
+- 🔗 **Easy AMI Connection** - Simplified connection management
+- 📱 **SMS Messaging** - Send SMS via Chan Dongle
+- 📞 **Call Control** - Complete call management and monitoring
+- 🎧 **Queue Management** - Advanced call queue handling
+- 📊 **Real-time Monitoring** - Live event monitoring and logging
+- 🔧 **CLI Commands** - Powerful command-line interface
+- 📋 **Interactive CLI** - User-friendly interactive console
+- 🌐 **USSD Support** - Execute USSD commands seamlessly
+- ⚡ **Async Processing** - Asynchronous event handling with ReactPHP
+- 🔒 **High Security** - Secure authentication and connection management
 
-## 📋 پیش‌نیازها / Requirements
+## 📋 Requirements
 
 - PHP >= 5.6.0
 - Laravel >= 5.1
 - Asterisk/Issabel server with AMI enabled
-- Chan Dongle (برای SMS و USSD)
+- Chan Dongle (for SMS and USSD functionality)
 - Extension `ext-mbstring`
 
-## 🚀 نصب / Installation
+## 🚀 Installation
+
+### Step 1: Install via Composer
+
+```bash
+composer require shahkochaki/ami
+```
+
+Or for the latest development version:
+
+```bash
+composer require shahkochaki/ami:dev-master
+```
+
+### Step 2: Register Service Provider
+
+Add to your `config/app.php` in the `providers` array:
+
+```php
+'providers' => [
+    // Other providers...
+    Shahkochaki\Ami\Providers\AmiServiceProvider::class,
+]
+```
+
+### Step 3: Publish Configuration
+
+```bash
+php artisan vendor:publish --tag=ami
+```
+
+This will create the `config/ami.php` configuration file.
+
+## ⚙️ Configuration
+
+### AMI Configuration in Asterisk
+
+Before using the package, you need to create an AMI user in Asterisk. Edit `/etc/asterisk/manager.conf`:
+
+```ini
+[general]
+enabled = yes
+port = 5038
+bindaddr = 0.0.0.0
+
+[myuser]
+secret = mypassword
+read = all
+write = all
+```
+
+After making changes, reload Asterisk:
+
+```bash
+asterisk -rx "manager reload"
+```
+
+### Laravel Configuration
+
+Edit the `config/ami.php` file:
+
+```php
+<?php
+
+return [
+    'host' => env('AMI_HOST', '127.0.0.1'),
+    'port' => env('AMI_PORT', 5038),
+    'username' => env('AMI_USERNAME', 'myuser'),
+    'secret' => env('AMI_SECRET', 'mypassword'),
+    
+    'dongle' => [
+        'sms' => [
+            'device' => env('AMI_SMS_DEVICE', 'dongle0'),
+        ],
+    ],
+    
+    'events' => [
+        // Event handlers configuration
+        'Dial' => [
+            // Custom event handlers
+        ],
+        'Hangup' => [
+            // Custom event handlers  
+        ],
+        // More events...
+    ],
+];
+```
+
+### Environment Variables (.env)
+
+```env
+AMI_HOST=192.168.1.100
+AMI_PORT=5038
+AMI_USERNAME=myuser
+AMI_SECRET=mypassword
+AMI_SMS_DEVICE=dongle0
+```
+
+## 🎯 Usage
+
+### 🎧 Event Listening
+
+Listen to all AMI events:
+
+```bash
+php artisan ami:listen
+```
+
+With console logging:
+
+```bash
+php artisan ami:listen --monitor
+```
+
+In PHP code:
+
+```php
+use Illuminate\Support\Facades\Artisan;
+
+Artisan::call('ami:listen');
+```
+
+### 📞 Sending AMI Actions
+
+```bash
+# Example: Get channel status
+php artisan ami:action Status
+
+# Example: Originate a call
+php artisan ami:action Originate --arguments=Channel:SIP/1001 --arguments=Context:default --arguments=Exten:1002 --arguments=Priority:1
+
+# Example: Hangup a call
+php artisan ami:action Hangup --arguments=Channel:SIP/1001-00000001
+```
+
+In PHP code:
+
+```php
+use Illuminate\Support\Facades\Artisan;
+
+// Get channel status
+Artisan::call('ami:action', [
+    'action' => 'Status'
+]);
+
+// Originate a call
+Artisan::call('ami:action', [
+    'action' => 'Originate',
+    '--arguments' => [
+        'Channel' => 'SIP/1001',
+        'Context' => 'default',
+        'Exten' => '1002',
+        'Priority' => '1'
+    ]
+]);
+```
+
+### 📱 Sending SMS
+
+Send regular SMS:
+
+```bash
+php artisan ami:dongle:sms 09123456789 "Hello, this is a test message"
+```
+
+Send long SMS (PDU mode):
+
+```bash
+php artisan ami:dongle:sms 09123456789 "Long message..." --pdu
+```
+
+Specify device:
+
+```bash
+php artisan ami:dongle:sms 09123456789 "Hello" dongle1
+```
+
+In PHP code:
+
+```php
+// Send regular SMS
+Artisan::call('ami:dongle:sms', [
+    'number' => '09123456789',
+    'message' => 'Hello, this is a test message'
+]);
+
+// Send long SMS
+Artisan::call('ami:dongle:sms', [
+    'number' => '09123456789', 
+    'message' => 'Long message...',
+    '--pdu' => true
+]);
+```
+
+### 🌐 USSD Commands
+
+```bash
+php artisan ami:dongle:ussd dongle0 "*141#"
+```
+
+In PHP code:
+
+```php
+Artisan::call('ami:dongle:ussd', [
+    'device' => 'dongle0',
+    'ussd' => '*141#'
+]);
+```
+
+### 💻 Interactive CLI Interface
+
+Start CLI interface:
+
+```bash
+php artisan ami:cli
+```
+
+Run command and auto-close:
+
+```bash
+php artisan ami:cli "core show channels" --autoclose
+```
+
+### 🔧 Usage without Laravel
+
+```bash
+php ./vendor/bin/ami ami:listen --host=192.168.1.100 --port=5038 --username=myuser --secret=mypass --monitor
+```
+
+## 📚 Advanced Examples
+
+### Event Management
+
+```php
+// In a Service Provider or Event Listener
+use Illuminate\Support\Facades\Event;
+
+Event::listen('ami.event.dial', function ($event) {
+    Log::info('New call started', [
+        'caller' => $event['CallerIDNum'],
+        'destination' => $event['Destination']
+    ]);
+});
+
+Event::listen('ami.event.hangup', function ($event) {
+    Log::info('Call ended', [
+        'channel' => $event['Channel'],
+        'cause' => $event['Cause']
+    ]);
+});
+```
+
+### Custom Call Manager Class
+
+```php
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Artisan;
+
+class CallManager
+{
+    public function makeCall($from, $to, $context = 'default')
+    {
+        return Artisan::call('ami:action', [
+            'action' => 'Originate',
+            '--arguments' => [
+                'Channel' => "SIP/{$from}",
+                'Context' => $context,
+                'Exten' => $to,
+                'Priority' => '1',
+                'CallerID' => $from
+            ]
+        ]);
+    }
+    
+    public function hangupCall($channel)
+    {
+        return Artisan::call('ami:action', [
+            'action' => 'Hangup',
+            '--arguments' => [
+                'Channel' => $channel
+            ]
+        ]);
+    }
+    
+    public function getChannelStatus()
+    {
+        return Artisan::call('ami:action', [
+            'action' => 'Status'
+        ]);
+    }
+}
+```
+
+### Bulk SMS Service
+
+```php
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Collection;
+
+class BulkSmsService
+{
+    protected $device;
+    
+    public function __construct($device = null)
+    {
+        $this->device = $device ?: config('ami.dongle.sms.device');
+    }
+    
+    public function sendBulkSms(Collection $recipients, string $message)
+    {
+        $results = [];
+        
+        foreach ($recipients as $number) {
+            try {
+                $result = Artisan::call('ami:dongle:sms', [
+                    'number' => $number,
+                    'message' => $message,
+                    'device' => $this->device,
+                    '--pdu' => strlen($message) > 160
+                ]);
+                
+                $results[$number] = ['status' => 'success', 'result' => $result];
+                
+                // Small delay between messages
+                usleep(500000); // 0.5 second
+                
+            } catch (\Exception $e) {
+                $results[$number] = ['status' => 'error', 'message' => $e->getMessage()];
+            }
+        }
+        
+        return $results;
+    }
+}
+```
+
+## 🔍 Supported Events
+
+The library supports all standard Asterisk events:
+
+- **Call Events**: `Dial`, `Hangup`, `NewChannel`, `Bridge`
+- **Agent Events**: `AgentConnect`, `AgentComplete`, `AgentLogin`, `AgentLogoff`
+- **Queue Events**: `QueueMember`, `QueueParams`, `QueueSummary`
+- **Dongle Events**: `DongleDeviceEntry`, `DongleSMSStatus`, `DongleUSSDStatus`
+- **System Events**: `Reload`, `Shutdown`, `PeerStatus`
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Connection Error**: 
+   ```
+   Connection refused
+   ```
+   - Check that Asterisk is running
+   - Verify port 5038 is open
+   - Check firewall settings
+
+2. **Authentication Error**:
+   ```
+   Authentication failed
+   ```
+   - Verify username and password
+   - Check AMI user permissions
+
+3. **SMS Device Error**:
+   ```
+   Device not found
+   ```
+   - Check Chan Dongle status: `dongle show devices`
+   - Verify device name is correct
+
+### Logging
+
+Enable detailed logging:
+
+```bash
+php artisan ami:listen --monitor
+```
+
+### Connection Testing
+
+```bash
+# Simple connection test
+php artisan ami:action Ping
+
+# Check dongle devices status
+php artisan ami:action Command --arguments=Command:"dongle show devices"
+```
+
+## 🔧 Development
+
+### Running Tests
+
+```bash
+composer test
+```
+
+### Code Standards
+
+```bash
+composer phpcs
+```
+
+### Project Structure
+
+```
+src/
+├── Commands/          # Artisan commands
+│   ├── AmiAbstract.php
+│   ├── AmiAction.php
+│   ├── AmiCli.php
+│   ├── AmiListen.php
+│   ├── AmiSms.php
+│   └── AmiUssd.php
+├── Providers/         # Service providers
+│   └── AmiServiceProvider.php
+├── Factory.php        # AMI connection factory
+└── Parser.php         # AMI protocol parser
+
+config/
+└── ami.php           # Configuration file
+
+tests/                # Test files
+└── ...
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Use PSR-4 autoloading
+- Run tests before committing
+- Add proper PHPDoc comments
+- Follow Laravel conventions
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE.md).
+
+## 👨‍💻 Author
+
+**Ali Shahkochaki**
+- Website: [shahkochaki.ir](https://shahkochaki.ir)
+- Email: ali.shahkochaki7@gmail.com
+- GitHub: [@shahkochaki](https://github.com/shahkochaki)
+
+## 🙏 Acknowledgments
+
+- [ReactPHP](https://reactphp.org/) for event loop
+- [clue/ami-react](https://github.com/clue/reactphp-ami) for AMI protocol
+- Laravel community for the amazing framework
+
+## 📚 Useful Resources
+
+- [Asterisk Manager Interface](https://wiki.asterisk.org/wiki/display/AST/The+Asterisk+Manager+TCP+IP+API)
+- [Chan Dongle Documentation](https://github.com/bg111/asterisk-chan-dongle)
+- [Issabel Documentation](https://www.issabel.org/documentation/)
+
+---
+
+⭐ If this project helped you, please give it a star!
+
+---
+
+# AMI - رابط مدیریت Asterisk برای Laravel
+
+<div align="center">
+  
+![لوگو AMI](https://raw.githubusercontent.com/shahkochaki/ami/main/logo.png)
+
+</div>
+
+یک کتابخانه قدرتمند و آسان برای اتصال سرورهای Laravel به سرورهای VOIP بر روی پلتفرم Issabel و Asterisk از طریق Asterisk Manager Interface (AMI).
+
+## ✨ امکانات اصلی
+
+- 🔗 **اتصال آسان به AMI** - مدیریت ساده اتصالات
+- 📱 **ارسال SMS** - ارسال پیامک از طریق Chan Dongle
+- 📞 **کنترل تماس‌ها** - مدیریت کامل و مانیتورینگ تماس‌ها
+- 🎧 **مدیریت صف تماس** - مدیریت پیشرفته صف‌های تماس
+- 📊 **مانیتورینگ real-time** - مانیتورینگ و لاگ‌گیری زنده رویدادها
+- 🔧 **دستورات CLI** - رابط خط فرمان قدرتمند
+- 📋 **رابط کاربری تعاملی** - کنسول تعاملی کاربرپسند
+- 🌐 **پشتیبانی از USSD** - اجرای دستورات USSD به صورت یکپارچه
+- ⚡ **پردازش ناهمزمان** - مدیریت رویدادهای ناهمزمان با ReactPHP
+- 🔒 **امنیت بالا** - احراز هویت ایمن و مدیریت اتصال
+
+## 📋 پیش‌نیازها
+
+- PHP >= 5.6.0
+- Laravel >= 5.1
+- سرور Asterisk/Issabel با AMI فعال
+- Chan Dongle (برای عملکرد SMS و USSD)
+- Extension `ext-mbstring`
+
+## 🚀 نصب
 
 ### گام 1: نصب از طریق Composer
 
@@ -63,11 +579,11 @@ php artisan vendor:publish --tag=ami
 
 این دستور فایل `config/ami.php` را ایجاد می‌کند.
 
-## ⚙️ تنظیمات / Configuration
+## ⚙️ تنظیمات
 
 ### تنظیمات AMI در Asterisk
 
-قبل از استفاده، باید یک کاربر AMI در Asterisk ایجاد کنید. فایل `/etc/asterisk/manager.conf`:
+قبل از استفاده، باید یک کاربر AMI در Asterisk ایجاد کنید. فایل `/etc/asterisk/manager.conf` را ویرایش کنید:
 
 ```ini
 [general]
@@ -89,8 +605,6 @@ asterisk -rx "manager reload"
 
 ### تنظیمات Laravel
 
-فایل `config/ami.php` را ویرایش کنید:
-
 ```php
 <?php
 
@@ -98,6 +612,418 @@ return [
     'host' => env('AMI_HOST', '127.0.0.1'),
     'port' => env('AMI_PORT', 5038),
     'username' => env('AMI_USERNAME', 'myuser'),
+    'secret' => env('AMI_SECRET', 'mypassword'),
+    
+    'dongle' => [
+        'sms' => [
+            'device' => env('AMI_SMS_DEVICE', 'dongle0'),
+        ],
+    ],
+    
+    'events' => [
+        // تنظیمات مدیریت رویدادها
+        'Dial' => [
+            // مدیریت‌کننده‌های سفارشی رویداد
+        ],
+        'Hangup' => [
+            // مدیریت‌کننده‌های سفارشی رویداد
+        ],
+        // رویدادهای بیشتر...
+    ],
+];
+```
+
+### متغیرهای محیطی (.env)
+
+```env
+AMI_HOST=192.168.1.100
+AMI_PORT=5038
+AMI_USERNAME=myuser
+AMI_SECRET=mypassword
+AMI_SMS_DEVICE=dongle0
+```
+
+## 🎯 استفاده
+
+### 🎧 گوش دادن به رویدادها
+
+گوش دادن به تمام رویدادهای AMI:
+
+```bash
+php artisan ami:listen
+```
+
+با نمایش log در کنسول:
+
+```bash
+php artisan ami:listen --monitor
+```
+
+در کد PHP:
+
+```php
+use Illuminate\Support\Facades\Artisan;
+
+Artisan::call('ami:listen');
+```
+
+### 📞 ارسال دستورات AMI
+
+```bash
+# مثال: وضعیت کانال‌ها
+php artisan ami:action Status
+
+# مثال: برقراری تماس
+php artisan ami:action Originate --arguments=Channel:SIP/1001 --arguments=Context:default --arguments=Exten:1002 --arguments=Priority:1
+
+# مثال: قطع تماس
+php artisan ami:action Hangup --arguments=Channel:SIP/1001-00000001
+```
+
+در کد PHP:
+
+```php
+use Illuminate\Support\Facades\Artisan;
+
+// دریافت وضعیت کانال‌ها
+Artisan::call('ami:action', [
+    'action' => 'Status'
+]);
+
+// برقراری تماس
+Artisan::call('ami:action', [
+    'action' => 'Originate',
+    '--arguments' => [
+        'Channel' => 'SIP/1001',
+        'Context' => 'default',
+        'Exten' => '1002',
+        'Priority' => '1'
+    ]
+]);
+```
+
+### 📱 ارسال SMS
+
+ارسال SMS معمولی:
+
+```bash
+php artisan ami:dongle:sms 09123456789 "سلام، این یک پیام تست است"
+```
+
+ارسال SMS طولانی (حالت PDU):
+
+```bash
+php artisan ami:dongle:sms 09123456789 "پیام طولانی..." --pdu
+```
+
+مشخص کردن دستگاه:
+
+```bash
+php artisan ami:dongle:sms 09123456789 "سلام" dongle1
+```
+
+در کد PHP:
+
+```php
+// ارسال SMS معمولی
+Artisan::call('ami:dongle:sms', [
+    'number' => '09123456789',
+    'message' => 'سلام، این یک پیام تست است'
+]);
+
+// ارسال SMS طولانی
+Artisan::call('ami:dongle:sms', [
+    'number' => '09123456789', 
+    'message' => 'پیام طولانی...',
+    '--pdu' => true
+]);
+```
+
+### 🌐 ارسال دستورات USSD
+
+```bash
+php artisan ami:dongle:ussd dongle0 "*141#"
+```
+
+در کد PHP:
+
+```php
+Artisan::call('ami:dongle:ussd', [
+    'device' => 'dongle0',
+    'ussd' => '*141#'
+]);
+```
+
+### 💻 رابط خط فرمان تعاملی
+
+شروع رابط CLI:
+
+```bash
+php artisan ami:cli
+```
+
+اجرای دستور و بستن خودکار:
+
+```bash
+php artisan ami:cli "core show channels" --autoclose
+```
+
+### 🔧 استفاده بدون Laravel
+
+```bash
+php ./vendor/bin/ami ami:listen --host=192.168.1.100 --port=5038 --username=myuser --secret=mypass --monitor
+```
+
+## 📚 مثال‌های پیشرفته
+
+### مدیریت رویدادها
+
+```php
+// در یک Service Provider یا Event Listener
+use Illuminate\Support\Facades\Event;
+
+Event::listen('ami.event.dial', function ($event) {
+    Log::info('تماس جدید شروع شد', [
+        'caller' => $event['CallerIDNum'],
+        'destination' => $event['Destination']
+    ]);
+});
+
+Event::listen('ami.event.hangup', function ($event) {
+    Log::info('تماس پایان یافت', [
+        'channel' => $event['Channel'],
+        'cause' => $event['Cause']
+    ]);
+});
+```
+
+### ایجاد کلاس سفارشی برای مدیریت تماس‌ها
+
+```php
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Artisan;
+
+class CallManager
+{
+    public function makeCall($from, $to, $context = 'default')
+    {
+        return Artisan::call('ami:action', [
+            'action' => 'Originate',
+            '--arguments' => [
+                'Channel' => "SIP/{$from}",
+                'Context' => $context,
+                'Exten' => $to,
+                'Priority' => '1',
+                'CallerID' => $from
+            ]
+        ]);
+    }
+    
+    public function hangupCall($channel)
+    {
+        return Artisan::call('ami:action', [
+            'action' => 'Hangup',
+            '--arguments' => [
+                'Channel' => $channel
+            ]
+        ]);
+    }
+    
+    public function getChannelStatus()
+    {
+        return Artisan::call('ami:action', [
+            'action' => 'Status'
+        ]);
+    }
+}
+```
+
+### سرویس ارسال SMS انبوه
+
+```php
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Collection;
+
+class BulkSmsService
+{
+    protected $device;
+    
+    public function __construct($device = null)
+    {
+        $this->device = $device ?: config('ami.dongle.sms.device');
+    }
+    
+    public function sendBulkSms(Collection $recipients, string $message)
+    {
+        $results = [];
+        
+        foreach ($recipients as $number) {
+            try {
+                $result = Artisan::call('ami:dongle:sms', [
+                    'number' => $number,
+                    'message' => $message,
+                    'device' => $this->device,
+                    '--pdu' => strlen($message) > 160
+                ]);
+                
+                $results[$number] = ['status' => 'success', 'result' => $result];
+                
+                // تأخیر کوتاه بین ارسال پیام‌ها
+                usleep(500000); // نیم ثانیه
+                
+            } catch (\Exception $e) {
+                $results[$number] = ['status' => 'error', 'message' => $e->getMessage()];
+            }
+        }
+        
+        return $results;
+    }
+}
+```
+
+## 🔍 رویدادهای پشتیبانی شده
+
+کتابخانه از تمام رویدادهای استاندارد Asterisk پشتیبانی می‌کند:
+
+- **رویدادهای تماس**: `Dial`, `Hangup`, `NewChannel`, `Bridge`
+- **رویدادهای اپراتور**: `AgentConnect`, `AgentComplete`, `AgentLogin`, `AgentLogoff`
+- **رویدادهای صف**: `QueueMember`, `QueueParams`, `QueueSummary`
+- **رویدادهای Dongle**: `DongleDeviceEntry`, `DongleSMSStatus`, `DongleUSSDStatus`
+- **رویدادهای سیستم**: `Reload`, `Shutdown`, `PeerStatus`
+
+## 🐛 عیب‌یابی
+
+### مشکلات رایج
+
+1. **خطای اتصال**: 
+   ```
+   Connection refused
+   ```
+   - بررسی کنید که Asterisk در حال اجرا باشد
+   - پورت 5038 باز باشد
+   - تنظیمات فایروال را بررسی کنید
+
+2. **خطای احراز هویت**:
+   ```
+   Authentication failed
+   ```
+   - نام کاربری و رمز عبور را بررسی کنید
+   - دسترسی‌های کاربر AMI را بررسی کنید
+
+3. **مشکل ارسال SMS**:
+   ```
+   Device not found
+   ```
+   - وضعیت Chan Dongle را بررسی کنید: `dongle show devices`
+   - نام دستگاه را درست وارد کرده‌اید
+
+### لاگ‌ها
+
+برای فعال‌سازی لاگ‌های تفصیلی:
+
+```bash
+php artisan ami:listen --monitor
+```
+
+### تست اتصال
+
+```bash
+# تست ساده اتصال
+php artisan ami:action Ping
+
+# بررسی وضعیت دستگاه‌های dongle
+php artisan ami:action Command --arguments=Command:"dongle show devices"
+```
+
+## 🔧 توسعه
+
+### اجرای تست‌ها
+
+```bash
+composer test
+```
+
+### استانداردهای کد
+
+```bash
+composer phpcs
+```
+
+### ساختار پروژه
+
+```
+src/
+├── Commands/          # دستورات Artisan
+│   ├── AmiAbstract.php
+│   ├── AmiAction.php
+│   ├── AmiCli.php
+│   ├── AmiListen.php
+│   ├── AmiSms.php
+│   └── AmiUssd.php
+├── Providers/         # Service providers
+│   └── AmiServiceProvider.php
+├── Factory.php        # کارخانه اتصال AMI
+└── Parser.php         # تجزیه‌کننده پروتکل AMI
+
+config/
+└── ami.php           # فایل تنظیمات
+
+tests/                # فایل‌های تست
+└── ...
+```
+
+## 🤝 مشارکت
+
+از مشارکت شما استقبال می‌کنیم! لطفاً:
+
+1. پروژه را Fork کنید
+2. یک branch جدید ایجاد کنید (`git checkout -b feature/amazing-feature`)
+3. تغییرات را commit کنید (`git commit -m 'Add amazing feature'`)
+4. به branch خود push کنید (`git push origin feature/amazing-feature`)
+5. یک Pull Request ایجاد کنید
+
+### راهنمای توسعه
+
+- از PSR-4 autoloading استفاده کنید
+- تست‌ها را اجرا کنید قبل از commit
+- PHPDoc مناسب اضافه کنید
+- از استانداردهای Laravel پیروی کنید
+
+## 📄 مجوز
+
+این پروژه تحت مجوز [MIT License](LICENSE.md) منتشر شده است.
+
+## 👨‍💻 سازنده
+
+**علی شاهکچکی**
+- وب‌سایت: [shahkochaki.ir](https://shahkochaki.ir)
+- ایمیل: ali.shahkochaki7@gmail.com
+- گیت‌هاب: [@shahkochaki](https://github.com/shahkochaki)
+
+## 🙏 تشکر
+
+- [ReactPHP](https://reactphp.org/) برای event loop
+- [clue/ami-react](https://github.com/clue/reactphp-ami) برای پروتکل AMI
+- جامعه Laravel برای فریمورک فوق‌العاده
+
+## 📚 منابع مفید
+
+- [Asterisk Manager Interface](https://wiki.asterisk.org/wiki/display/AST/The+Asterisk+Manager+TCP+IP+API)
+- [مستندات Chan Dongle](https://github.com/bg111/asterisk-chan-dongle)
+- [مستندات Issabel](https://www.issabel.org/documentation/)
+
+---
+
+⭐ اگر این پروژه برایتان مفید بود، لطفاً ستاره بدهید!
+
+**Made with ❤️ for Iranian developers**
     'secret' => env('AMI_SECRET', 'mypassword'),
 
     'dongle' => [
