@@ -1,14 +1,22 @@
 {
     "name": "shahkochaki/ami",
-    "description": "A package to connect Laravel servers with VOIP servers on the Issabel platform by AMI",
+    "description": "A modern Laravel package for connecting to VOIP servers on Asterisk/Issabel platform via AMI. Supports PHP 8+ and Laravel 9+.",
+    "version": "2.0.1",
     "type": "library",
     "license": "MIT",
     "keywords": [
-        "Shahkochaki",
-        "Ami",
-        "Asterisk",
-        "Issabel",
-        "Voip"
+        "laravel",
+        "asterisk",
+        "issabel",
+        "ami",
+        "voip",
+        "sms",
+        "ussd",
+        "chan-dongle",
+        "pbx",
+        "telephony",
+        "php8",
+        "laravel9"
     ],
     "homepage": "https://github.com/shahkochaki/ami",
     "authors": [
@@ -53,15 +61,28 @@
             "@phpunit",
             "@phpcs"
         ],
+        "test-coverage": "php vendor/bin/phpunit --coverage-html coverage",
         "phpunit": "php vendor/bin/phpunit",
-        "phpcs": "php vendor/bin/php-cs-fixer --diff --dry-run -v fix"
+        "phpcs": "php vendor/bin/php-cs-fixer --diff --dry-run -v fix",
+        "phpcs-fix": "php vendor/bin/php-cs-fixer fix",
+        "post-install-cmd": [
+            "@php artisan vendor:publish --tag=ami --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=ami --ansi"
+        ]
     },
     "bin": [
         "bin/ami"
     ],
     "extra": {
+        "laravel": {
+            "providers": [
+                "Shahkochaki\\Ami\\Providers\\AmiServiceProvider"
+            ]
+        },
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "2.0-dev"
         }
     },
     "minimum-stability": "dev",

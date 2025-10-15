@@ -5,6 +5,53 @@ All notable changes to the `shahkochaki/ami` package will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2025-10-15
+
+### Added
+- 🚀 **Modern PHP Support**: Updated to PHP 8.0+ and Laravel 9.0+
+- 📚 **Enhanced Documentation**: Comprehensive bilingual documentation (English/Persian)
+- 🔧 **Standalone CLI**: Added `bin/ami` for usage without Laravel
+- 💾 **Connection Management**: Advanced connection pooling and management
+- 📞 **Call Management Service**: Enhanced call control with `CallManager` class
+- 📱 **Bulk SMS Service**: Advanced SMS service with retry logic and queue support
+- 🎧 **Event Management**: Structured event listening with `AmiEventListener`
+- ⚡ **Rate Limiting**: API protection with rate limiting middleware
+- 🏗️ **Laravel Facade**: Easy access via `Ami::class` facade
+- 🔄 **Background Jobs**: Queue support for bulk operations
+- 📊 **Testing Suite**: Comprehensive testing with performance and integration tests
+- 🔧 **Enhanced Config**: Advanced configuration with environment variables
+- 🛡️ **Security Features**: IP whitelisting and encryption options
+- 🚀 **Performance**: Caching and async processing optimizations
+
+### Changed
+- ⬆️ **PHP Requirement**: Updated from 5.6+ to 8.0+
+- ⬆️ **Laravel Requirement**: Updated from 5.1+ to 9.0+
+- 📦 **Dependencies**: Updated all dependencies to modern versions
+- 🔄 **Auto-Discovery**: Laravel service provider auto-discovery support
+- 📖 **Documentation**: Complete rewrite with better structure and examples
+
+### Enhanced
+- 📖 **Documentation**:
+  - Step-by-step installation guide
+  - Comprehensive usage examples
+  - Advanced configuration options
+  - Troubleshooting section
+  - Upgrade guide from v1.x
+  - Persian language support
+- 🔧 **Configuration**:
+  - Environment variables support
+  - Connection pooling settings
+  - Security configurations
+  - Performance tuning options
+
+### Technical Improvements
+- 🏗️ Better code organization with service classes
+- 🔄 Asynchronous processing capabilities
+- 📊 Connection health monitoring
+- 🔒 Enhanced security features
+- 📈 Performance monitoring and statistics
+- 🧪 Comprehensive test coverage
+
 ## [Unreleased]
 
 ### Added
