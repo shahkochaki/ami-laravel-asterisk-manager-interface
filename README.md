@@ -2,12 +2,12 @@
 
 <div align="center">
   
-![AMI Logo](https://raw.githubusercontent.com/shahkochaki/ami/main/logo.png)
+![AMI Logo](https://raw.githubusercontent.com/shahkochaki/ami-laravel-asterisk-manager-interface/main/logo.png)
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
-[![Total Downloads](https://img.shields.io/packagist/dt/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
-[![License](https://img.shields.io/packagist/l/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
-[![PHP Version](https://img.shields.io/packagist/php-v/shahkochaki/ami.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/shahkochaki/ami-laravel-asterisk-manager-interface.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami-laravel-asterisk-manager-interface)
+[![Total Downloads](https://img.shields.io/packagist/dt/shahkochaki/ami-laravel-asterisk-manager-interface.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami-laravel-asterisk-manager-interface)
+[![License](https://img.shields.io/packagist/l/shahkochaki/ami-laravel-asterisk-manager-interface.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami-laravel-asterisk-manager-interface)
+[![PHP Version](https://img.shields.io/packagist/php-v/shahkochaki/ami-laravel-asterisk-manager-interface.svg?style=flat-square)](https://packagist.org/packages/shahkochaki/ami-laravel-asterisk-manager-interface)
 
 </div>
 
@@ -48,13 +48,13 @@ A powerful and easy-to-use Laravel package for connecting to VOIP servers on the
 ### Step 1: Install via Composer
 
 ```bash
-composer require shahkochaki/ami
+composer require shahkochaki/ami-laravel-asterisk-manager-interface
 ```
 
 Or for the latest development version:
 
 ```bash
-composer require shahkochaki/ami:dev-master
+composer require shahkochaki/ami-laravel-asterisk-manager-interface:dev-master
 ```
 
 ### Step 2: Register Service Provider
@@ -93,7 +93,7 @@ php artisan --version
 ### 2. Update the package
 
 ```bash
-composer require shahkochaki/ami
+composer require shahkochaki/ami-laravel-asterisk-manager-interface
 ```
 
 ### 3. Update your code
@@ -565,7 +565,7 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 <div align="center">
   
-![لوگو AMI](https://raw.githubusercontent.com/shahkochaki/ami/main/logo.png)
+![لوگو AMI](https://raw.githubusercontent.com/shahkochaki/ami-laravel-asterisk-manager-interface/main/logo.png)
 
 </div>
 
@@ -606,13 +606,13 @@ This project is licensed under the [MIT License](LICENSE.md).
 ### گام 1: نصب از طریق Composer
 
 ```bash
-composer require shahkochaki/ami
+composer require shahkochaki/ami-laravel-asterisk-manager-interface
 ```
 
 یا برای آخرین نسخه توسعه:
 
 ```bash
-composer require shahkochaki/ami:dev-master
+composer require shahkochaki/ami-laravel-asterisk-manager-interface:dev-master
 ```
 
 ### گام 2: ثبت Service Provider
@@ -651,7 +651,7 @@ php artisan --version
 ### 2. به‌روزرسانی پکیج
 
 ```bash
-composer require shahkochaki/ami
+composer require shahkochaki/ami-laravel-asterisk-manager-interface
 ```
 
 ### 3. به‌روزرسانی کد شما

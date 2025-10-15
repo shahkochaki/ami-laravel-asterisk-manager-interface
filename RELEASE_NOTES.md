@@ -208,8 +208,8 @@ RUN composer require shahkochaki/ami
 ## 🔗 **Useful Links**
 
 - 📖 [Documentation](README.md)
-- 🐛 [Report Issues](https://github.com/shahkochaki/ami/issues)
-- 💬 [Discussions](https://github.com/shahkochaki/ami/discussions)
+- 🐛 [Report Issues](https://github.com/shahkochaki/ami-laravel-asterisk-manager-interface/issues)
+- 💬 [Discussions](https://github.com/shahkochaki/ami-laravel-asterisk-manager-interface/discussions)
 - 📧 [Email Support](mailto:ali.shahkochaki7@gmail.com)
 - 🌐 [Author Website](https://shahkochaki.ir)
 

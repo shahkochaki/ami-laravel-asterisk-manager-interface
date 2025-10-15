@@ -10,11 +10,11 @@ We welcome contributions to the Shahkochaki AMI package! This document will help
 
 ```bash
 # Fork the repository on GitHub, then clone your fork
-git clone https://github.com/YOUR_USERNAME/ami.git
-cd ami
+git clone https://github.com/YOUR_USERNAME/ami-laravel-asterisk-manager-interface.git
+cd ami-laravel-asterisk-manager-interface
 
 # Add the original repository as upstream
-git remote add upstream https://github.com/shahkochaki/ami.git
+git remote add upstream https://github.com/shahkochaki/ami-laravel-asterisk-manager-interface.git
 ```
 
 ### 2. Set Up Development Environment
