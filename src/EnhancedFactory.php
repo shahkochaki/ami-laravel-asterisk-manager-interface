@@ -62,7 +62,7 @@ class EnhancedFactory extends Factory
     public function create(array $options = [])
     {
         $connectionKey = $this->getConnectionKey($options);
-        
+
         // Return existing connection if pooling is enabled
         if ($this->enablePooling && isset($this->connections[$connectionKey])) {
             $connection = $this->connections[$connectionKey];
@@ -94,15 +94,15 @@ class EnhancedFactory extends Factory
         }
 
         $timeout = Arr::get($options, 'timeout', $this->connectionTimeout);
-        
+
         $promise = $this->connector
             ->create($options['host'], $options['port'])
             ->then(function (Stream $stream) use ($options) {
                 $client = new Client($stream, new Parser());
-                
+
                 // Set up connection monitoring
                 $this->setupConnectionMonitoring($client);
-                
+
                 return $client;
             });
 
@@ -117,10 +117,10 @@ class EnhancedFactory extends Factory
                             $this->connections[$connectionKey] = $client;
                             $this->configs[$connectionKey] = $options;
                         }
-                        
+
                         // Set up heartbeat
                         $this->setupHeartbeat($client, $connectionKey);
-                        
+
                         return $client;
                     },
                     function ($error) use ($client) {
@@ -237,7 +237,7 @@ class EnhancedFactory extends Factory
                 // Ignore errors during cleanup
             }
         }
-        
+
         $this->connections = [];
         $this->configs = [];
     }
@@ -267,11 +267,11 @@ class EnhancedFactory extends Factory
     public function setPooling($enable)
     {
         $this->enablePooling = $enable;
-        
+
         if (!$enable) {
             $this->closeAll();
         }
-        
+
         return $this;
     }
 

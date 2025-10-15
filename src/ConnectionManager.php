@@ -101,7 +101,7 @@ class ConnectionManager
                 // Ignore errors during cleanup
             }
         }
-        
+
         self::$connections = [];
         self::$configs = [];
     }
@@ -130,7 +130,7 @@ class ConnectionManager
     public static function setPooling($enable)
     {
         self::$enablePooling = $enable;
-        
+
         if (!$enable) {
             self::closeAll();
         }
