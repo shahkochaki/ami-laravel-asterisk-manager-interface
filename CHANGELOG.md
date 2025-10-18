@@ -5,6 +5,20 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.4] - 2025-10-18
+
+### Fixed
+
+- 🚨 **Critical Fatal Error Fix**: Fixed `FatalError: Declaration of Shahkochaki\Ami\Commands\Command::execute() must be compatible with Symfony\Component\Console\Command\Command::execute(): int`
+- 🔧 **Console Command Compatibility**: Updated `execute()` method signature to include `: int` return type for Symfony Console v4.4+ compatibility
+- ⚡ **Queue Worker Stability**: Fixed crashes when running AMI commands through Laravel queue workers
+- 🎯 **Exit Code Handling**: Properly normalized command return values to integer exit codes (0 for success, 1 for failure)
+
+### Changed
+
+- **Method Signature**: Updated `Command::execute()` to return `int` instead of `mixed`
+- **Return Value Normalization**: Added logic to convert handler results to proper exit codes
+
 ## [2.1.3] - 2025-10-16
 
 ### Fixed

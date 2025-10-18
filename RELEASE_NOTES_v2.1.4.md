@@ -21,20 +21,23 @@
 ### 🔄 **Technical Changes**
 
 #### Updated Method Signature
+
 ```php
 // Before (v2.1.3)
 protected function execute(InputInterface $input, OutputInterface $output)
 
-// After (v2.1.4)  
+// After (v2.1.4)
 protected function execute(InputInterface $input, OutputInterface $output): int
 ```
 
 #### Normalized Return Values
+
 - **Success cases:** Returns `0` (success exit code)
-- **Failure cases:** Returns `1` (error exit code)  
+- **Failure cases:** Returns `1` (error exit code)
 - **Handler results:** Properly converts mixed return types to integers
 
 ### 📦 **Affected Commands**
+
 - `php artisan ami:listen`
 - `php artisan ami:sms`
 - `php artisan ami:ussd`
@@ -46,11 +49,13 @@ protected function execute(InputInterface $input, OutputInterface $output): int
 ## 🚀 **Installation & Update**
 
 ### New Installation
+
 ```bash
 composer require shahkochaki/ami-laravel-asterisk-manager-interface:^2.1.4
 ```
 
 ### Update Existing Installation
+
 ```bash
 composer update shahkochaki/ami-laravel-asterisk-manager-interface
 ```
@@ -64,7 +69,9 @@ composer update shahkochaki/ami-laravel-asterisk-manager-interface
 This is a **drop-in replacement** that maintains full backward compatibility while fixing the fatal error.
 
 ### Verification
+
 After updating, verify the fix by running:
+
 ```bash
 php artisan queue:work fastJob
 # or any AMI command like:
@@ -85,6 +92,7 @@ php artisan ami:listen
 ## 🐛 **Bug Fixes**
 
 ### Command Execution
+
 - Fixed fatal error when running AMI commands through queue workers
 - Fixed method signature compatibility with modern Symfony Console
 - Ensured proper exit code handling for all command scenarios
