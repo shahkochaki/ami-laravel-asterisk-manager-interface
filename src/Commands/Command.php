@@ -167,13 +167,26 @@ class Command extends SymfonyCommand
      * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return mixed
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $method = method_exists($this, 'handle') ? 'handle' : 'fire';
 
-        return $this->$method();
+        $result = $this->$method();
+
+        // Normalize the result to an int exit code per Symfony contract.
+        if (is_int($result)) {
+            return $result;
+        }
+
+        if ($result === false) {
+            // Return non-zero exit code on failure
+            return 1;
+        }
+
+        // Return 0 for success
+        return 0;
     }
 
     /**
