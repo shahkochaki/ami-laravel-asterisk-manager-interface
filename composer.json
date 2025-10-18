@@ -1,5 +1,6 @@
 {
     "name": "shahkochaki/ami-laravel-asterisk-manager-interface",
+    "version": "2.1.4",
     "description": "A modern Laravel package for connecting to VOIP servers on Asterisk/Issabel platform via AMI. Supports PHP 8+ and Laravel 9-12.",
     "type": "library",
     "license": "MIT",
