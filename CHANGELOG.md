@@ -5,6 +5,19 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.5] - 2025-10-18
+
+### Fixed
+
+- 🚨 **Additional Fatal Error Fix**: Fixed `FatalError: Declaration of Shahkochaki\Ami\Commands\Command::run() must be compatible with Symfony\Component\Console\Command\Command::run(): int`
+- 🔧 **Complete Console Compatibility**: Updated `run()` method signature to include `: int` return type
+- ⚡ **Full Symfony Console Support**: Both `execute()` and `run()` methods now fully compatible with modern Symfony Console versions
+
+### Changed
+
+- **Method Signature**: Updated `Command::run()` to return `int` instead of no declared return type
+- **Complete Coverage**: All console command methods now properly typed for Symfony compatibility
+
 ## [2.1.4] - 2025-10-18
 
 ### Fixed

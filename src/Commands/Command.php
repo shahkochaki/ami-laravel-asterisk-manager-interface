@@ -152,7 +152,7 @@ class Command extends SymfonyCommand
      *
      * @return int
      */
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
 
