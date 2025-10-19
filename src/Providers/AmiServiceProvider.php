@@ -6,6 +6,8 @@ use Shahkochaki\Ami\Factory;
 use Shahkochaki\Ami\Commands\AmiCli;
 use Shahkochaki\Ami\Commands\AmiSms;
 use Shahkochaki\Ami\Commands\AmiUssd;
+use Shahkochaki\Ami\Commands\AmiSystemControl;
+use Shahkochaki\Ami\Services\SystemManager;
 use React\Socket\Connector;
 use Shahkochaki\Ami\Commands\AmiAction;
 use Shahkochaki\Ami\Commands\AmiListen;
@@ -35,9 +37,11 @@ class AmiServiceProvider extends ServiceProvider
         $this->registerEventLoop();
         $this->registerConnector();
         $this->registerFactory();
+        $this->registerSystemManager();
         $this->registerDongleUssd();
         $this->registerAmiListen();
         $this->registerAmiAction();
+        $this->registerAmiSystemControl();
         $this->registerDongleSms();
         $this->registerAmiCli();
         $this->commands([
@@ -45,6 +49,7 @@ class AmiServiceProvider extends ServiceProvider
             'command.ami.dongle.sms',
             'command.ami.listen',
             'command.ami.action',
+            'command.ami.system',
             'command.ami.cli',
         ]);
     }
@@ -145,5 +150,27 @@ class AmiServiceProvider extends ServiceProvider
             return new Factory($app[LoopInterface::class], $app[Connector::class]);
         });
         $this->app->alias(Factory::class, 'ami.factory');
+    }
+
+    /**
+     * Register the system manager service.
+     */
+    protected function registerSystemManager()
+    {
+        $this->app->singleton(SystemManager::class, function ($app) {
+            return new SystemManager($app['config']['ami']);
+        });
+        $this->app->alias(SystemManager::class, 'ami.system.manager');
+    }
+
+    /**
+     * Register the ami system control command.
+     */
+    protected function registerAmiSystemControl()
+    {
+        $this->app->singleton(AmiSystemControl::class, function ($app) {
+            return new AmiSystemControl($app['events'], $app['ami.eventloop'], $app['ami.factory'], $app['config']['ami']);
+        });
+        $this->app->alias(AmiSystemControl::class, 'command.ami.system');
     }
 }
