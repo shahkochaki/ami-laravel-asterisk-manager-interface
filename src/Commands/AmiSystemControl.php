@@ -41,7 +41,7 @@ class AmiSystemControl extends AmiAbstract
     public function client(Client $client)
     {
         parent::client($client);
-        
+
         $operation = $this->argument('operation');
         $graceful = $this->option('graceful');
         $module = $this->option('module');
@@ -92,16 +92,16 @@ class AmiSystemControl extends AmiAbstract
         switch ($operation) {
             case 'shutdown':
                 return $this->shutdownServer($graceful);
-            
+
             case 'restart':
                 return $this->restartServer($graceful);
-            
+
             case 'reload':
                 return $this->reloadConfiguration($module);
-            
+
             case 'status':
                 return $this->getServerStatus();
-            
+
             default:
                 return null;
         }
@@ -116,7 +116,7 @@ class AmiSystemControl extends AmiAbstract
     protected function shutdownServer($graceful)
     {
         $command = $graceful ? 'core stop gracefully' : 'core stop now';
-        
+
         if ($this->runningInConsole()) {
             $this->info("Executing: {$command}");
         }
@@ -133,7 +133,7 @@ class AmiSystemControl extends AmiAbstract
     protected function restartServer($graceful)
     {
         $command = $graceful ? 'core restart gracefully' : 'core restart now';
-        
+
         if ($this->runningInConsole()) {
             $this->info("Executing: {$command}");
         }
@@ -150,7 +150,7 @@ class AmiSystemControl extends AmiAbstract
     protected function reloadConfiguration($module)
     {
         $command = $module ? "module reload {$module}" : 'core reload';
-        
+
         if ($this->runningInConsole()) {
             $this->info("Executing: {$command}");
         }

@@ -5,6 +5,126 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.1] - 2025-10-19
+
+### 🚀 Major New Features
+
+- 🖥️ **Complete System Management**: Full Asterisk/Issabel server control capabilities
+- 🔧 **SystemManager Service**: Comprehensive service for server operations
+- 📋 **CLI System Commands**: New `ami:system` command for system management
+- 🏗️ **SystemManager Facade**: Easy Laravel facade access for system operations
+- 📅 **Scheduled Operations**: Queue-based scheduled system operations with `SystemManagementJob`
+- 📊 **Health Monitoring**: Advanced system health checking and monitoring
+- 🔒 **Safe Operations**: Intelligent operations with active call detection
+
+### 🆕 Added Components
+
+- **SystemManager Service** (`src/Services/SystemManager.php`):
+  - Server shutdown (graceful/immediate)
+  - Server restart (graceful/immediate)  
+  - Configuration reload (full/module-specific)
+  - System status monitoring
+  - Active channels monitoring
+  - Resource usage monitoring
+  - Scheduled operations
+- **AmiSystemControl Command** (`src/Commands/AmiSystemControl.php`):
+  - CLI interface for system management
+  - Interactive confirmations for destructive operations
+  - Detailed status reporting
+- **SystemManagementJob** (`src/Jobs/SystemManagementJob.php`):
+  - Queue-based scheduled operations
+  - Health check automation
+  - Retry logic and error handling
+- **SystemManager Facade** (`src/Facades/SystemManager.php`):
+  - Laravel facade for easy access
+  - IDE-friendly method hints
+
+### 📚 Documentation & Examples
+
+- **Complete System Management Guide** (`docs/SYSTEM_MANAGEMENT.md`):
+  - Comprehensive Persian documentation
+  - Usage examples and best practices
+  - Safety guidelines and troubleshooting
+- **Practical Examples** (`examples/system_management_examples.php`):
+  - Real-world usage scenarios
+  - Health checking implementations
+  - Error handling examples
+- **Updated README**: Enhanced with system management features
+
+### 🎯 Usage Examples
+
+#### Service Usage
+```php
+use Shahkochaki\Ami\Services\SystemManager;
+
+$systemManager = new SystemManager();
+$systemManager->shutdownServer(true, 'Maintenance');
+$systemManager->restartServer(false, 'Emergency');
+$status = $systemManager->getServerStatus();
+```
+
+#### CLI Usage
+```bash
+php artisan ami:system shutdown --graceful
+php artisan ami:system restart --force
+php artisan ami:system status
+php artisan ami:system reload --module=sip
+```
+
+#### Facade Usage
+```php
+SystemManager::shutdownServer(true, 'Scheduled maintenance');
+SystemManager::emergencyRestart();
+$channels = SystemManager::getActiveChannels();
+```
+
+#### Scheduled Operations
+```php
+SystemManagementJob::scheduleRestart(60, true, 'Nightly maintenance');
+SystemManagementJob::scheduleShutdown(120, true, 'End of business hours');
+```
+
+### 🔧 Technical Enhancements
+
+- **Service Provider Updates**: Registered new services and commands
+- **Enhanced Keywords**: Added system management related keywords
+- **Improved Architecture**: Clean separation of concerns
+- **Error Handling**: Comprehensive error handling and logging
+- **Event Integration**: System operation events for monitoring
+
+### 🛡️ Safety Features
+
+- **Active Call Detection**: Prevents accidental service interruption
+- **Graceful Operations**: Option for graceful shutdown/restart
+- **Confirmation Prompts**: Interactive confirmations for destructive operations
+- **Health Checks**: Pre-operation system health validation
+- **Resource Monitoring**: System resource usage tracking
+
+### 📦 Package Structure Updates
+
+```
+src/
+├── Commands/
+│   └── AmiSystemControl.php      # NEW
+├── Services/
+│   └── SystemManager.php         # NEW  
+├── Jobs/
+│   └── SystemManagementJob.php   # NEW
+├── Facades/
+│   └── SystemManager.php         # NEW
+docs/
+└── SYSTEM_MANAGEMENT.md           # NEW
+examples/
+└── system_management_examples.php # NEW
+```
+
+### 🎨 Updated Documentation
+
+- **README.md**: Complete rewrite with system management features
+- **Feature Comparison Table**: Version comparison with new capabilities
+- **Quick Start Guide**: Fast setup and testing instructions
+- **Troubleshooting**: Enhanced troubleshooting for system operations
+
 ## [2.1.5] - 2025-10-18
 
 ### Fixed

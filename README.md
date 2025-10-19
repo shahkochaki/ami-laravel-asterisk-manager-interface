@@ -20,11 +20,13 @@ A powerful and easy-to-use Laravel package for connecting to VOIP servers on the
 - 📞 **Call Control** - Complete call management and monitoring
 - 🎧 **Queue Management** - Advanced call queue handling
 - 📊 **Real-time Monitoring** - Live event monitoring and logging
-- 🔧 **CLI Commands** - Powerful command-line interface
+- �️ **System Management** - Server shutdown, restart, and configuration reload
+- �🔧 **CLI Commands** - Powerful command-line interface
 - 📋 **Interactive CLI** - User-friendly interactive console
 - 🌐 **USSD Support** - Execute USSD commands seamlessly
 - ⚡ **Async Processing** - Asynchronous event handling with ReactPHP
 - 🔒 **High Security** - Secure authentication and connection management
+- 📅 **Scheduled Operations** - Queue-based scheduled system operations
 
 ## 📋 Requirements
 
@@ -578,11 +580,13 @@ This project is licensed under the [MIT License](LICENSE.md).
 - 📞 **کنترل تماس‌ها** - مدیریت کامل و مانیتورینگ تماس‌ها
 - 🎧 **مدیریت صف تماس** - مدیریت پیشرفته صف‌های تماس
 - 📊 **مانیتورینگ real-time** - مانیتورینگ و لاگ‌گیری زنده رویدادها
-- 🔧 **دستورات CLI** - رابط خط فرمان قدرتمند
+- �️ **مدیریت سیستم** - خاموش، ریست و بارگیری مجدد سرور
+- �🔧 **دستورات CLI** - رابط خط فرمان قدرتمند
 - 📋 **رابط کاربری تعاملی** - کنسول تعاملی کاربرپسند
 - 🌐 **پشتیبانی از USSD** - اجرای دستورات USSD به صورت یکپارچه
 - ⚡ **پردازش ناهمزمان** - مدیریت رویدادهای ناهمزمان با ReactPHP
 - 🔒 **امنیت بالا** - احراز هویت ایمن و مدیریت اتصال
+- 📅 **عملیات برنامه‌ریزی شده** - عملیات زمان‌بندی شده با Queue
 
 ## 📋 پیش‌نیازها
 
@@ -594,14 +598,81 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ## 🔄 سازگاری نسخه‌ها
 
-| نسخه پکیج | نسخه PHP | نسخه Laravel | وضعیت    |
-| --------- | -------- | ------------ | -------- |
-| 2.x       | 8.0+     | 9.0+         | ✅ فعلی  |
-| 1.x       | 5.6+     | 5.1+         | ⚠️ قدیمی |
+| نسخه پکیج | نسخه PHP | نسخه Laravel | امکانات جدید | وضعیت    |
+| --------- | -------- | ------------ | ----------- | -------- |
+| 2.1+      | 8.0+     | 9.0+         | System Management, Queue Jobs | ✅ جدید  |
+| 2.0       | 8.0+     | 9.0+         | Modern PHP Features | ✅ فعلی  |
+| 1.x       | 5.6+     | 5.1+         | Basic AMI Operations | ⚠️ قدیمی |
 
-**توجه**: نسخه 2.x شامل ویژگی‌های مدرن PHP مانند typed properties، match expressions و بهبود عملکرد است.
+**توجه**: نسخه 2.1+ شامل مدیریت کامل سیستم، عملیات برنامه‌ریزی شده و ویژگی‌های پیشرفته است.
 
-## 🚀 نصب
+### مقایسه امکانات نسخه‌ها
+
+| ویژگی | v1.x | v2.0 | v2.1+ |
+|--------|------|------|-------|
+| AMI Connection | ✅ | ✅ | ✅ |
+| Event Listening | ✅ | ✅ | ✅ |
+| SMS Sending | ✅ | ✅ | ✅ |
+| USSD Commands | ✅ | ✅ | ✅ |
+| Call Management | ✅ | ✅ | ✅ |
+| Interactive CLI | ✅ | ✅ | ✅ |
+| Modern PHP (8.0+) | ❌ | ✅ | ✅ |
+| **System Management** | ❌ | ❌ | ✅ |
+| **Server Shutdown/Restart** | ❌ | ❌ | ✅ |
+| **Configuration Reload** | ❌ | ❌ | ✅ |
+| **Health Monitoring** | ❌ | ❌ | ✅ |
+| **Scheduled Operations** | ❌ | ❌ | ✅ |
+| **Queue Jobs** | ❌ | ❌ | ✅ |
+| **SystemManager Service** | ❌ | ❌ | ✅ |
+| **Facade Support** | ❌ | ❌ | ✅ |
+
+## 🚀 شروع سریع / Quick Start
+
+### نصب و راه‌اندازی اولیه
+
+```bash
+# نصب پکیج
+composer require shahkochaki/ami-laravel-asterisk-manager-interface
+
+# انتشار فایل تنظیمات
+php artisan vendor:publish --tag=ami
+
+# تنظیم متغیرهای محیطی
+# در فایل .env
+AMI_HOST=192.168.1.100
+AMI_PORT=5038
+AMI_USERNAME=myuser
+AMI_SECRET=mypassword
+```
+
+### تست اتصال
+
+```bash
+# تست اتصال ساده
+php artisan ami:action Ping
+
+# گوش دادن به رویدادها
+php artisan ami:listen --monitor
+
+# دریافت وضعیت سرور
+php artisan ami:system status
+```
+
+### مثال سریع مدیریت سیستم
+
+```php
+use Shahkochaki\Ami\Services\SystemManager;
+
+// ایجاد instance
+$systemManager = new SystemManager();
+
+// دریافت وضعیت سرور
+$status = $systemManager->getServerStatus();
+echo "Server Status: " . json_encode($status);
+
+// ریست امن سرور
+$systemManager->restartServer(true, 'System update');
+```
 
 ### گام 1: نصب از طریق Composer
 
@@ -1280,6 +1351,87 @@ php artisan ami:cli "core show channels" --autoclose
 php ./vendor/bin/ami ami:listen --host=192.168.1.100 --port=5038 --username=myuser --secret=mypass --monitor
 ```
 
+### 🖥️ مدیریت سیستم / System Management
+
+**جدید!** امکان کنترل کامل سرور Asterisk/Issabel:
+
+#### خاموش کردن و ریست سرور / Server Shutdown & Restart
+
+```bash
+# خاموش کردن تدریجی سرور
+php artisan ami:system shutdown --graceful
+
+# ریست فوری سرور
+php artisan ami:system restart --force
+
+# دریافت وضعیت سرور
+php artisan ami:system status
+
+# بارگیری مجدد تنظیمات
+php artisan ami:system reload --module=sip
+```
+
+#### استفاده از SystemManager Service
+
+```php
+use Shahkochaki\Ami\Services\SystemManager;
+
+$systemManager = new SystemManager([
+    'host' => 'localhost',
+    'port' => 5038,
+    'username' => 'admin',
+    'secret' => 'amp111'
+]);
+
+// خاموش کردن تدریجی
+$systemManager->shutdownServer(true, 'System maintenance');
+
+// ریست فوری
+$systemManager->restartServer(false, 'Emergency restart');
+
+// بارگیری مجدد تنظیمات SIP
+$systemManager->reloadConfiguration('sip');
+
+// دریافت وضعیت کامل سرور
+$status = $systemManager->getServerStatus();
+
+// برنامه‌ریزی ریست برای 30 دقیقه آینده
+$schedule = $systemManager->scheduleRestart(30, true, 'Scheduled maintenance');
+```
+
+#### استفاده از Facade
+
+```php
+use Shahkochaki\Ami\Facades\SystemManager;
+
+// خاموش کردن تدریجی
+SystemManager::shutdownServer(true, 'Scheduled maintenance');
+
+// ریست اضطراری
+SystemManager::emergencyRestart();
+
+// دریافت کانال‌های فعال
+$channels = SystemManager::getActiveChannels();
+
+// نظارت بر منابع سیستم
+$resources = SystemManager::getSystemResources();
+```
+
+#### عملیات برنامه‌ریزی شده با Queue
+
+```php
+use Shahkochaki\Ami\Jobs\SystemManagementJob;
+
+// برنامه‌ریزی ریست برای 1 ساعت آینده
+SystemManagementJob::scheduleRestart(60, true, 'Nightly maintenance');
+
+// برنامه‌ریزی خاموش کردن برای 2 ساعت آینده
+SystemManagementJob::scheduleShutdown(120, true, 'End of business hours');
+
+// برنامه‌ریزی بارگیری مجدد تنظیمات
+SystemManagementJob::scheduleReload(30, 'dialplan');
+```
+
 ## 📚 مثال‌های پیشرفته / Advanced Examples
 
 ### مدیریت رویدادها
@@ -1394,6 +1546,98 @@ class BulkSmsService
 }
 ```
 
+### سرویس مدیریت سیستم پیشرفته
+
+```php
+<?php
+
+namespace App\Services;
+
+use Shahkochaki\Ami\Services\SystemManager;
+use Illuminate\Support\Facades\Log;
+
+class AdvancedSystemManager
+{
+    protected $systemManager;
+
+    public function __construct()
+    {
+        $this->systemManager = new SystemManager();
+    }
+
+    /**
+     * بررسی سلامت سیستم و اقدام در صورت نیاز
+     */
+    public function performHealthCheck()
+    {
+        $status = $this->systemManager->getServerStatus();
+        $resources = $this->systemManager->getSystemResources();
+        $channels = $this->systemManager->getActiveChannels();
+
+        $issues = [];
+
+        // بررسی خطاها
+        if (isset($status['error'])) {
+            $issues[] = 'Server status error: ' . $status['error'];
+        }
+
+        // بررسی مصرف بالای کانال‌ها
+        $channelCount = is_array($channels) ? count($channels) : 0;
+        if ($channelCount > 100) {
+            $issues[] = "High channel usage: {$channelCount} active channels";
+        }
+
+        // لاگ مشکلات
+        if (!empty($issues)) {
+            Log::warning('System health issues detected', $issues);
+            
+            // ارسال اعلان یا اقدام خودکار
+            $this->handleHealthIssues($issues);
+        }
+
+        return [
+            'healthy' => empty($issues),
+            'issues' => $issues,
+            'channel_count' => $channelCount,
+            'timestamp' => now()
+        ];
+    }
+
+    /**
+     * خاموش کردن امن با بررسی شرایط
+     */
+    public function safeShutdown($reason = 'System maintenance')
+    {
+        // بررسی کانال‌های فعال
+        $channels = $this->systemManager->getActiveChannels();
+        
+        if (empty($channels)) {
+            Log::info('No active calls, proceeding with immediate shutdown');
+            return $this->systemManager->shutdownServer(false, $reason);
+        } else {
+            Log::info('Active calls detected, using graceful shutdown', [
+                'active_channels' => count($channels)
+            ]);
+            return $this->systemManager->shutdownServer(true, $reason);
+        }
+    }
+
+    /**
+     * مدیریت مشکلات سلامت سیستم
+     */
+    protected function handleHealthIssues(array $issues)
+    {
+        foreach ($issues as $issue) {
+            if (str_contains($issue, 'High channel usage')) {
+                // اقدام برای کاهش بار
+                Log::warning('Implementing load reduction measures');
+                // می‌توانید اینجا اقدامات خاصی انجام دهید
+            }
+        }
+    }
+}
+```
+
 ## 🔍 رویدادهای پشتیبانی شده / Supported Events
 
 کتابخانه از تمام رویدادهای استاندارد Asterisk پشتیبانی می‌کند:
@@ -1403,6 +1647,7 @@ class BulkSmsService
 - **Queue Events**: `QueueMember`, `QueueParams`, `QueueSummary`
 - **Dongle Events**: `DongleDeviceEntry`, `DongleSMSStatus`, `DongleUSSDStatus`
 - **System Events**: `Reload`, `Shutdown`, `PeerStatus`
+- **Management Events**: `ami.system.operation.sent`, `ami.system.operation.completed`
 
 ## 🐛 عیب‌یابی / Troubleshooting
 
@@ -1476,7 +1721,18 @@ src/
 │   ├── AmiCli.php
 │   ├── AmiListen.php
 │   ├── AmiSms.php
-│   └── AmiUssd.php
+│   ├── AmiUssd.php
+│   └── AmiSystemControl.php   # NEW: System management command
+├── Services/          # Service classes
+│   ├── BulkSmsService.php
+│   ├── CallManager.php
+│   └── SystemManager.php      # NEW: System management service
+├── Jobs/              # Queue jobs
+│   ├── BulkSmsJob.php
+│   └── SystemManagementJob.php # NEW: Scheduled system operations
+├── Facades/           # Laravel facades
+│   ├── Ami.php
+│   └── SystemManager.php      # NEW: System management facade
 ├── Providers/         # Service providers
 │   └── AmiServiceProvider.php
 ├── Factory.php        # AMI connection factory
@@ -1484,6 +1740,14 @@ src/
 
 config/
 └── ami.php           # Configuration file
+
+docs/                 # Documentation
+├── SYSTEM_MANAGEMENT.md    # NEW: System management guide
+└── ...
+
+examples/             # Usage examples
+├── system_management_examples.php  # NEW: System management examples
+└── ...
 
 tests/                # Test files
 └── ...
@@ -1529,6 +1793,43 @@ tests/                # Test files
 - [Asterisk Manager Interface](https://wiki.asterisk.org/wiki/display/AST/The+Asterisk+Manager+TCP+IP+API)
 - [Chan Dongle Documentation](https://github.com/bg111/asterisk-chan-dongle)
 - [Issabel Documentation](https://www.issabel.org/documentation/)
+- [System Management Guide](docs/SYSTEM_MANAGEMENT.md) - راهنمای کامل مدیریت سیستم
+- [System Management Examples](examples/system_management_examples.php) - مثال‌های عملی
+
+## 🆕 تغییرات نسخه جدید / What's New
+
+### نسخه 2.1+ - مدیریت سیستم
+
+- ✅ **SystemManager Service**: کنترل کامل سرور Asterisk/Issabel
+- ✅ **System Commands**: دستورات CLI برای مدیریت سیستم
+- ✅ **Scheduled Operations**: عملیات برنامه‌ریزی شده با Queue
+- ✅ **Health Monitoring**: نظارت بر سلامت سیستم
+- ✅ **Safe Operations**: عملیات امن با بررسی شرایط
+- ✅ **Event Integration**: ادغام با سیستم رویداد Laravel
+
+### امکانات جدید:
+
+```php
+// خاموش کردن و ریست سرور
+SystemManager::shutdownServer(true, 'Maintenance');
+SystemManager::restartServer(false, 'Emergency');
+
+// نظارت بر سیستم
+$status = SystemManager::getServerStatus();
+$resources = SystemManager::getSystemResources();
+
+// عملیات برنامه‌ریزی شده
+SystemManagementJob::scheduleRestart(60, true, 'Nightly restart');
+```
+
+### دستورات جدید CLI:
+
+```bash
+php artisan ami:system shutdown --graceful
+php artisan ami:system restart --force  
+php artisan ami:system reload --module=sip
+php artisan ami:system status
+```
 
 ---
 

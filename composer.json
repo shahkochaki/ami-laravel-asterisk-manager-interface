@@ -1,7 +1,7 @@
 {
     "name": "shahkochaki/ami-laravel-asterisk-manager-interface",
-    "version": "v2.1.5",
-    "description": "A modern Laravel package for connecting to VOIP servers on Asterisk/Issabel platform via AMI. Supports PHP 8+ and Laravel 9-12.",
+    "version": "v2.2.1",
+    "description": "A modern Laravel package for connecting to VOIP servers on Asterisk/Issabel platform via AMI with advanced system management. Supports PHP 8+ and Laravel 9-12.",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -15,6 +15,11 @@
         "chan-dongle",
         "pbx",
         "telephony",
+        "system-management",
+        "server-control",
+        "shutdown",
+        "restart",
+        "queue-jobs",
         "php8",
         "laravel9",
         "laravel10",

@@ -37,11 +37,11 @@ class SystemManager
     public function shutdownServer($graceful = true, $reason = 'System maintenance')
     {
         $action = $graceful ? 'CoreShowChannels' : 'Command';
-        
+
         if ($graceful) {
             // First check if there are active calls
             $activeChannels = $this->getActiveChannels();
-            
+
             // If there are active calls, use graceful shutdown
             if ($this->hasActiveCalls($activeChannels)) {
                 return $this->executeAction('Command', [
@@ -66,7 +66,7 @@ class SystemManager
     public function restartServer($graceful = true, $reason = 'System maintenance')
     {
         $command = $graceful ? 'core restart gracefully' : 'core restart now';
-        
+
         return $this->executeAction('Command', [
             'Command' => $command
         ]);
@@ -81,7 +81,7 @@ class SystemManager
     public function reloadConfiguration($module = null)
     {
         $command = $module ? "module reload {$module}" : 'core reload';
-        
+
         return $this->executeAction('Command', [
             'Command' => $command
         ]);
@@ -95,7 +95,7 @@ class SystemManager
     public function getServerStatus()
     {
         $status = [];
-        
+
         try {
             // Get system info
             $status['system_info'] = $this->executeAction('Command', [
@@ -119,7 +119,6 @@ class SystemManager
             $status['calls'] = $this->executeAction('Command', [
                 'Command' => 'core show calls'
             ]);
-
         } catch (Exception $e) {
             $status['error'] = $e->getMessage();
         }
@@ -237,20 +236,19 @@ class SystemManager
     public function getSystemResources()
     {
         $resources = [];
-        
+
         try {
             $resources['memory'] = $this->executeAction('Command', [
                 'Command' => 'memory show summary'
             ]);
-            
+
             $resources['tasks'] = $this->executeAction('Command', [
                 'Command' => 'core show taskprocessors'
             ]);
-            
+
             $resources['threads'] = $this->executeAction('Command', [
                 'Command' => 'core show threads'
             ]);
-
         } catch (Exception $e) {
             $resources['error'] = $e->getMessage();
         }
