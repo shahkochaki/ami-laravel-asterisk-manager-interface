@@ -17,6 +17,7 @@ This major release introduces comprehensive system management capabilities for y
 ## 🌟 Key New Features
 
 ### 1. 🔧 SystemManager Service
+
 ```php
 use Shahkochaki\Ami\Services\SystemManager;
 
@@ -36,6 +37,7 @@ $status = $systemManager->getServerStatus();
 ```
 
 ### 2. 📋 Powerful CLI Commands
+
 ```bash
 # Graceful server shutdown
 php artisan ami:system shutdown --graceful
@@ -51,6 +53,7 @@ php artisan ami:system reload --module=sip
 ```
 
 ### 3. 🏗️ Laravel Facade Integration
+
 ```php
 use Shahkochaki\Ami\Facades\SystemManager;
 
@@ -64,6 +67,7 @@ $resources = SystemManager::getSystemResources();
 ```
 
 ### 4. 📅 Scheduled Operations with Queue
+
 ```php
 use Shahkochaki\Ami\Jobs\SystemManagementJob;
 
@@ -80,12 +84,14 @@ SystemManagementJob::scheduleHealthCheck();
 ## 🛡️ Safety & Intelligence
 
 ### Smart Operation Handling
+
 - **Active Call Detection**: Automatically detects ongoing calls before shutdown/restart
 - **Graceful vs Immediate**: Choose between graceful operations (wait for calls) or immediate
 - **Confirmation Prompts**: Interactive safety confirmations for destructive operations
 - **Health Monitoring**: Pre-flight checks before critical operations
 
 ### Example: Smart Shutdown
+
 ```php
 $systemManager = new SystemManager();
 
@@ -104,6 +110,7 @@ if (empty($channels)) {
 ## 📊 Comprehensive Monitoring
 
 ### System Health Dashboard
+
 ```php
 $status = $systemManager->getServerStatus();
 $resources = $systemManager->getSystemResources();
@@ -119,16 +126,19 @@ $resources = $systemManager->getSystemResources();
 ## 📚 Complete Documentation
 
 ### New Documentation Files
+
 - **📖 [System Management Guide](docs/SYSTEM_MANAGEMENT.md)**: Complete Persian guide
 - **💡 [Practical Examples](examples/system_management_examples.php)**: Real-world scenarios
 - **📋 Updated README**: Enhanced with all new features
 
 ### Persian Language Support
+
 همه مستندات به زبان فارسی نیز موجود است و شامل مثال‌های عملی و راهنمای کامل استفاده می‌باشد.
 
 ## 🔧 Technical Implementation
 
 ### New Package Structure
+
 ```
 src/
 ├── Commands/
@@ -136,7 +146,7 @@ src/
 ├── Services/
 │   └── SystemManager.php         # Core system service
 ├── Jobs/
-│   └── SystemManagementJob.php   # Queue-based operations  
+│   └── SystemManagementJob.php   # Queue-based operations
 ├── Facades/
 │   └── SystemManager.php         # Laravel facade
 └── Providers/
@@ -152,6 +162,7 @@ examples/
 ## 🎯 Use Cases
 
 ### 1. **Automated Maintenance**
+
 ```php
 // Schedule nightly restart
 SystemManagementJob::scheduleRestart(
@@ -162,6 +173,7 @@ SystemManagementJob::scheduleRestart(
 ```
 
 ### 2. **Emergency Operations**
+
 ```php
 // Emergency shutdown
 SystemManager::emergencyShutdown();
@@ -171,6 +183,7 @@ SystemManager::emergencyRestart();
 ```
 
 ### 3. **Configuration Management**
+
 ```php
 // Reload dialplan after changes
 $systemManager->reloadConfiguration('dialplan');
@@ -180,36 +193,39 @@ $systemManager->reloadConfiguration();
 ```
 
 ### 4. **Health Monitoring**
+
 ```php
-class SystemHealthService 
+class SystemHealthService
 {
     public function performHealthCheck()
     {
         $systemManager = new SystemManager();
-        
+
         $status = $systemManager->getServerStatus();
         $resources = $systemManager->getSystemResources();
         $channels = $systemManager->getActiveChannels();
-        
+
         // Custom health logic
         $healthScore = $this->calculateHealthScore($status, $resources, $channels);
-        
+
         if ($healthScore < 70) {
             // Trigger alerts or automated recovery
             $this->handleHealthIssues($healthScore);
         }
-        
+
         return $healthScore;
     }
 }
 ```
 
 ## 🚨 Breaking Changes
+
 **None!** This release is fully backward compatible with all existing v2.x installations.
 
 ## 📦 Installation & Upgrade
 
 ### For New Installations
+
 ```bash
 composer require shahkochaki/ami-laravel-asterisk-manager-interface:^2.2
 
@@ -221,6 +237,7 @@ php artisan ami:system status
 ```
 
 ### For Existing v2.x Users
+
 ```bash
 # Simple update
 composer update shahkochaki/ami-laravel-asterisk-manager-interface
@@ -230,6 +247,7 @@ php artisan ami:system status
 ```
 
 ## 🛠️ Requirements
+
 - PHP >= 8.0
 - Laravel >= 9.0
 - Asterisk/Issabel server with AMI enabled
@@ -238,6 +256,7 @@ php artisan ami:system status
 ## 🔒 Security Considerations
 
 ### AMI User Permissions
+
 For system management operations, ensure your AMI user has appropriate permissions:
 
 ```ini
@@ -248,6 +267,7 @@ write = all  ; Required for system operations
 ```
 
 ### Production Safety
+
 - Always test system operations in development first
 - Use graceful operations in production
 - Monitor active calls before destructive operations
@@ -256,11 +276,13 @@ write = all  ; Required for system operations
 ## 🐛 Troubleshooting
 
 ### Common Issues
+
 1. **Permission Denied**: Ensure AMI user has `write=all` permissions
 2. **Connection Issues**: Verify Asterisk AMI is enabled and accessible
 3. **Operation Failed**: Check Asterisk logs for detailed error messages
 
 ### Getting Help
+
 - 📖 [Complete Documentation](docs/SYSTEM_MANAGEMENT.md)
 - 💡 [Examples](examples/system_management_examples.php)
 - 🐛 [GitHub Issues](https://github.com/shahkochaki/ami-laravel-asterisk-manager-interface/issues)
@@ -273,6 +295,7 @@ Special thanks to the community for requesting system management features and pr
 ## 🎯 What's Next
 
 Future planned features:
+
 - Web-based system management dashboard
 - Real-time system metrics
 - Advanced scheduling with cron expressions
@@ -290,7 +313,7 @@ Future planned features:
 ## 📊 Release Statistics
 
 - **New Files**: 6
-- **Updated Files**: 3  
+- **Updated Files**: 3
 - **New Features**: 12
 - **Documentation Pages**: 2
 - **Code Examples**: 15+

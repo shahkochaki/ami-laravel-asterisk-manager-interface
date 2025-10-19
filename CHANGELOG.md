@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **SystemManager Service** (`src/Services/SystemManager.php`):
   - Server shutdown (graceful/immediate)
-  - Server restart (graceful/immediate)  
+  - Server restart (graceful/immediate)
   - Configuration reload (full/module-specific)
   - System status monitoring
   - Active channels monitoring
@@ -54,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🎯 Usage Examples
 
 #### Service Usage
+
 ```php
 use Shahkochaki\Ami\Services\SystemManager;
 
@@ -64,6 +65,7 @@ $status = $systemManager->getServerStatus();
 ```
 
 #### CLI Usage
+
 ```bash
 php artisan ami:system shutdown --graceful
 php artisan ami:system restart --force
@@ -72,6 +74,7 @@ php artisan ami:system reload --module=sip
 ```
 
 #### Facade Usage
+
 ```php
 SystemManager::shutdownServer(true, 'Scheduled maintenance');
 SystemManager::emergencyRestart();
@@ -79,6 +82,7 @@ $channels = SystemManager::getActiveChannels();
 ```
 
 #### Scheduled Operations
+
 ```php
 SystemManagementJob::scheduleRestart(60, true, 'Nightly maintenance');
 SystemManagementJob::scheduleShutdown(120, true, 'End of business hours');
@@ -107,7 +111,7 @@ src/
 ├── Commands/
 │   └── AmiSystemControl.php      # NEW
 ├── Services/
-│   └── SystemManager.php         # NEW  
+│   └── SystemManager.php         # NEW
 ├── Jobs/
 │   └── SystemManagementJob.php   # NEW
 ├── Facades/

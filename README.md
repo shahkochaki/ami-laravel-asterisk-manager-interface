@@ -598,33 +598,33 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ## 🔄 سازگاری نسخه‌ها
 
-| نسخه پکیج | نسخه PHP | نسخه Laravel | امکانات جدید | وضعیت    |
-| --------- | -------- | ------------ | ----------- | -------- |
+| نسخه پکیج | نسخه PHP | نسخه Laravel | امکانات جدید                  | وضعیت    |
+| --------- | -------- | ------------ | ----------------------------- | -------- |
 | 2.1+      | 8.0+     | 9.0+         | System Management, Queue Jobs | ✅ جدید  |
-| 2.0       | 8.0+     | 9.0+         | Modern PHP Features | ✅ فعلی  |
-| 1.x       | 5.6+     | 5.1+         | Basic AMI Operations | ⚠️ قدیمی |
+| 2.0       | 8.0+     | 9.0+         | Modern PHP Features           | ✅ فعلی  |
+| 1.x       | 5.6+     | 5.1+         | Basic AMI Operations          | ⚠️ قدیمی |
 
 **توجه**: نسخه 2.1+ شامل مدیریت کامل سیستم، عملیات برنامه‌ریزی شده و ویژگی‌های پیشرفته است.
 
 ### مقایسه امکانات نسخه‌ها
 
-| ویژگی | v1.x | v2.0 | v2.1+ |
-|--------|------|------|-------|
-| AMI Connection | ✅ | ✅ | ✅ |
-| Event Listening | ✅ | ✅ | ✅ |
-| SMS Sending | ✅ | ✅ | ✅ |
-| USSD Commands | ✅ | ✅ | ✅ |
-| Call Management | ✅ | ✅ | ✅ |
-| Interactive CLI | ✅ | ✅ | ✅ |
-| Modern PHP (8.0+) | ❌ | ✅ | ✅ |
-| **System Management** | ❌ | ❌ | ✅ |
-| **Server Shutdown/Restart** | ❌ | ❌ | ✅ |
-| **Configuration Reload** | ❌ | ❌ | ✅ |
-| **Health Monitoring** | ❌ | ❌ | ✅ |
-| **Scheduled Operations** | ❌ | ❌ | ✅ |
-| **Queue Jobs** | ❌ | ❌ | ✅ |
-| **SystemManager Service** | ❌ | ❌ | ✅ |
-| **Facade Support** | ❌ | ❌ | ✅ |
+| ویژگی                       | v1.x | v2.0 | v2.1+ |
+| --------------------------- | ---- | ---- | ----- |
+| AMI Connection              | ✅   | ✅   | ✅    |
+| Event Listening             | ✅   | ✅   | ✅    |
+| SMS Sending                 | ✅   | ✅   | ✅    |
+| USSD Commands               | ✅   | ✅   | ✅    |
+| Call Management             | ✅   | ✅   | ✅    |
+| Interactive CLI             | ✅   | ✅   | ✅    |
+| Modern PHP (8.0+)           | ❌   | ✅   | ✅    |
+| **System Management**       | ❌   | ❌   | ✅    |
+| **Server Shutdown/Restart** | ❌   | ❌   | ✅    |
+| **Configuration Reload**    | ❌   | ❌   | ✅    |
+| **Health Monitoring**       | ❌   | ❌   | ✅    |
+| **Scheduled Operations**    | ❌   | ❌   | ✅    |
+| **Queue Jobs**              | ❌   | ❌   | ✅    |
+| **SystemManager Service**   | ❌   | ❌   | ✅    |
+| **Facade Support**          | ❌   | ❌   | ✅    |
 
 ## 🚀 شروع سریع / Quick Start
 
@@ -1590,7 +1590,7 @@ class AdvancedSystemManager
         // لاگ مشکلات
         if (!empty($issues)) {
             Log::warning('System health issues detected', $issues);
-            
+
             // ارسال اعلان یا اقدام خودکار
             $this->handleHealthIssues($issues);
         }
@@ -1610,7 +1610,7 @@ class AdvancedSystemManager
     {
         // بررسی کانال‌های فعال
         $channels = $this->systemManager->getActiveChannels();
-        
+
         if (empty($channels)) {
             Log::info('No active calls, proceeding with immediate shutdown');
             return $this->systemManager->shutdownServer(false, $reason);
@@ -1826,7 +1826,7 @@ SystemManagementJob::scheduleRestart(60, true, 'Nightly restart');
 
 ```bash
 php artisan ami:system shutdown --graceful
-php artisan ami:system restart --force  
+php artisan ami:system restart --force
 php artisan ami:system reload --module=sip
 php artisan ami:system status
 ```
