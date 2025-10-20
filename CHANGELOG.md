@@ -5,6 +5,48 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.2] - 2025-10-20
+
+### 🐛 Critical Bug Fixes
+
+- **Fixed "Target class [ami] does not exist" Error**: Added proper `AmiService` registration in Service Provider
+- **Added Main AMI Service**: Created `AmiService` class as the central service for all AMI operations
+- **Fixed Service Container Binding**: Properly bound `'ami'` alias to `AmiService` class
+- **Enhanced Error Handling**: Improved service resolution and dependency injection
+- **Added Comprehensive Troubleshooting**: Created detailed troubleshooting guide and examples
+
+### 🆕 Added Components
+
+- **AmiService** (`src/Services/AmiService.php`): Central service for all AMI operations
+- **Troubleshooting Guide** (`docs/TROUBLESHOOTING.md`): Comprehensive error resolution guide
+- **Troubleshooting Examples** (`examples/troubleshooting_examples.php`): Practical solution examples
+
+### 🔧 Enhanced Features
+
+- **Better Service Resolution**: Multiple ways to access AMI services
+- **Improved Documentation**: Added troubleshooting resources to README
+- **Service Container Integration**: Proper Laravel service container integration
+- **Dependency Injection Support**: Full support for DI in controllers and services
+
+### 💡 Usage Examples
+
+```php
+// Direct instantiation (always works)
+$ami = new \Shahkochaki\Ami\Services\AmiService($config);
+
+// Service container (after this fix)
+$ami = app('ami');
+
+// Dependency injection (after this fix)
+public function __construct(AmiService $ami) { ... }
+```
+
+### 📚 New Documentation
+
+- [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Complete error resolution guide
+- [Troubleshooting Examples](examples/troubleshooting_examples.php) - Practical examples
+- Updated README with troubleshooting resources
+
 ## [v2.2.1] - 2025-10-19
 
 ### 🚀 Major New Features

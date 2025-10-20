@@ -1795,6 +1795,7 @@ tests/                # Test files
 - [Issabel Documentation](https://www.issabel.org/documentation/)
 - [System Management Guide](docs/SYSTEM_MANAGEMENT.md) - راهنمای کامل مدیریت سیستم
 - [System Management Examples](examples/system_management_examples.php) - مثال‌های عملی
+- [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - راهنمای عیب‌یابی و حل مشکلات
 
 ## 🆕 تغییرات نسخه جدید / What's New
 

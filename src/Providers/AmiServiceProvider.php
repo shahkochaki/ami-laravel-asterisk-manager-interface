@@ -8,6 +8,7 @@ use Shahkochaki\Ami\Commands\AmiSms;
 use Shahkochaki\Ami\Commands\AmiUssd;
 use Shahkochaki\Ami\Commands\AmiSystemControl;
 use Shahkochaki\Ami\Services\SystemManager;
+use Shahkochaki\Ami\Services\AmiService;
 use React\Socket\Connector;
 use Shahkochaki\Ami\Commands\AmiAction;
 use Shahkochaki\Ami\Commands\AmiListen;
@@ -37,6 +38,7 @@ class AmiServiceProvider extends ServiceProvider
         $this->registerEventLoop();
         $this->registerConnector();
         $this->registerFactory();
+        $this->registerAmiService();
         $this->registerSystemManager();
         $this->registerDongleUssd();
         $this->registerAmiListen();
@@ -150,6 +152,17 @@ class AmiServiceProvider extends ServiceProvider
             return new Factory($app[LoopInterface::class], $app[Connector::class]);
         });
         $this->app->alias(Factory::class, 'ami.factory');
+    }
+
+    /**
+     * Register the main AMI service.
+     */
+    protected function registerAmiService()
+    {
+        $this->app->singleton(AmiService::class, function ($app) {
+            return new AmiService($app['config']['ami'] ?? []);
+        });
+        $this->app->alias(AmiService::class, 'ami');
     }
 
     /**
