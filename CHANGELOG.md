@@ -5,6 +5,35 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.3] - 2025-10-20
+
+### 🐛 Type Compatibility Fixes
+
+- **Fixed OutputStyle Type Compatibility**: Added proper `: bool` return type declarations to `OutputStyle` methods
+- **Laravel 12 & PHP 8+ Compatibility**: Resolved type declaration compatibility issues with modern Laravel versions
+- **Enhanced Laravel Support**: Added Laravel 11.x support to dependencies
+- **Symfony Console Compatibility**: Fixed method signature compatibility with Symfony Console 6.x+
+
+### 🔧 Technical Improvements
+
+- **Fixed OutputStyle::isQuiet()**: Added `: bool` return type
+- **Fixed OutputStyle::isVerbose()**: Added `: bool` return type
+- **Fixed OutputStyle::isVeryVerbose()**: Added `: bool` return type
+- **Fixed OutputStyle::isDebug()**: Added `: bool` return type
+- **Updated Dependencies**: Added Laravel 11.x support in composer.json
+
+### 📦 Updated Support Matrix
+
+| Component       | Supported Versions    |
+| --------------- | --------------------- |
+| PHP             | 8.0+                  |
+| Laravel         | 9.x, 10.x, 11.x, 12.x |
+| Symfony Console | 5.x, 6.x              |
+
+### 💡 Breaking Changes
+
+None - This is a backward compatible fix for type compatibility.
+
 ## [v2.2.2] - 2025-10-20
 
 ### 🐛 Critical Bug Fixes
