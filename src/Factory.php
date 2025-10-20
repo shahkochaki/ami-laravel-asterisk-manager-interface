@@ -2,10 +2,9 @@
 
 namespace Shahkochaki\Ami;
 
-use React\Stream\Stream;
 use Clue\React\Ami\Client;
-use Illuminate\Support\Arr;
 use Clue\React\Ami\ActionSender;
+use Illuminate\Support\Arr;
 use React\EventLoop\LoopInterface;
 use React\Socket\Connector;
 
@@ -22,7 +21,7 @@ class Factory
     protected $connector;
 
     /**
-     * @param \React\EventLoop\LoopInterface         $loop
+     * @param \React\EventLoop\LoopInterface $loop
      * @param \React\Socket\Connector $connector
      */
     public function __construct(LoopInterface $loop, Connector $connector)
@@ -43,9 +42,13 @@ class Factory
         foreach (['host', 'port', 'username', 'secret'] as $key) {
             $options[$key] = Arr::get($options, $key, null);
         }
-        $promise = $this->connector->create($options['host'], $options['port'])->then(function (Stream $stream) {
-            return new Client($stream, new Parser());
+
+        // Use new React Socket API: connect() instead of create()
+        $uri = $options['host'] . ':' . $options['port'];
+        $promise = $this->connector->connect($uri)->then(function ($stream) {
+            return new Client($stream, new \Shahkochaki\Ami\Parser());
         });
+
         if (!is_null($options['username'])) {
             $promise = $promise->then(function (Client $client) use ($options) {
                 $sender = new ActionSender($client);

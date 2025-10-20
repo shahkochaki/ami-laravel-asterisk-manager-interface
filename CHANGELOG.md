@@ -5,6 +5,26 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.4] - 2025-10-20
+
+### 🐛 React Socket API Compatibility Fix
+
+- **Fixed React\Socket API Compatibility**: Updated `Factory::create()` method to use new React Socket API
+- **Replaced Deprecated create() Method**: Changed `$connector->create()` to `$connector->connect()`
+- **Updated Connection Format**: Modified host:port connection format for React Socket v1.x compatibility
+- **Removed Deprecated Imports**: Cleaned up `React\Stream\Stream` import and updated type hints
+
+### 🔧 Technical Improvements
+
+- **Fixed Factory::create()**: Updated to use `$connector->connect($host . ':' . $port)` instead of deprecated `create($host, $port)`
+- **Stream Type Compatibility**: Removed deprecated `React\Stream\Stream` type hints for modern React compatibility
+- **Enhanced Error Handling**: Maintained existing promise-based error handling with updated API
+
+### 📦 Dependencies
+
+- **React Socket v1.x**: Full compatibility with latest React Socket package
+- **Backward Compatible**: No breaking changes to public API
+
 ## [v2.2.3] - 2025-10-20
 
 ### 🐛 Type Compatibility Fixes
