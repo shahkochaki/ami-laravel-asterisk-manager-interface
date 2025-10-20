@@ -11,7 +11,7 @@ echo "1. بررسی وجود کلاس‌ها:\n";
 
 $classes = [
     'Shahkochaki\Ami\Services\AmiService',
-    'Shahkochaki\Ami\Services\SystemManager', 
+    'Shahkochaki\Ami\Services\SystemManager',
     'Shahkochaki\Ami\Providers\AmiServiceProvider',
     'Shahkochaki\Ami\Facades\Ami'
 ];
@@ -33,10 +33,10 @@ try {
         'username' => 'test',
         'secret' => 'test'
     ];
-    
+
     $ami = new \Shahkochaki\Ami\Services\AmiService($config);
     echo "   ✅ AmiService با موفقیت ایجاد شد\n";
-    
+
     // تست متدهای موجود
     $methods = ['ping', 'getStats', 'system', 'calls', 'sms'];
     foreach ($methods as $method) {
@@ -46,7 +46,6 @@ try {
             echo "   ❌ متد $method موجود نیست\n";
         }
     }
-    
 } catch (Exception $e) {
     echo "   ❌ خطا در ایجاد AmiService: " . $e->getMessage() . "\n";
 }
@@ -56,7 +55,7 @@ echo "\n3. تست SystemManager:\n";
 try {
     $systemManager = new \Shahkochaki\Ami\Services\SystemManager($config);
     echo "   ✅ SystemManager با موفقیت ایجاد شد\n";
-    
+
     // تست متدهای موجود
     $methods = ['shutdownServer', 'restartServer', 'getServerStatus', 'reloadConfiguration'];
     foreach ($methods as $method) {
@@ -66,7 +65,6 @@ try {
             echo "   ❌ متد $method موجود نیست\n";
         }
     }
-    
 } catch (Exception $e) {
     echo "   ❌ خطا در ایجاد SystemManager: " . $e->getMessage() . "\n";
 }
@@ -92,7 +90,7 @@ echo "=== پایان تست ===\n";
 function testConnection($host = '127.0.0.1', $port = 5038, $username = 'admin', $secret = 'amp111')
 {
     echo "\n=== تست اتصال به سرور AMI ===\n";
-    
+
     try {
         $ami = new \Shahkochaki\Ami\Services\AmiService([
             'host' => $host,
@@ -100,16 +98,15 @@ function testConnection($host = '127.0.0.1', $port = 5038, $username = 'admin', 
             'username' => $username,
             'secret' => $secret
         ]);
-        
+
         echo "Service ایجاد شد، تست اتصال...\n";
-        
+
         // در اینجا تست واقعی اتصال انجام می‌شود
         // فعلاً فقط بررسی می‌کنیم که Service درست کار می‌کند
-        
+
         echo "✅ AMI Service آماده استفاده است\n";
         echo "💡 برای تست اتصال واقعی، دستور زیر را اجرا کنید:\n";
         echo "php artisan ami:action Ping --host=$host --port=$port --username=$username --secret=$secret\n";
-        
     } catch (Exception $e) {
         echo "❌ خطا: " . $e->getMessage() . "\n";
     }
