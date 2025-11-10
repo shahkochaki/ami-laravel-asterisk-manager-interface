@@ -5,6 +5,36 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.6] - 2025-11-10
+
+### 🔧 Complete Docker Compatibility Fix
+
+- **Fixed All Docker Build Issues**: Eliminated composer patch application failures completely
+- **Enhanced Composer Configuration**: Added explicit patch configuration and plugin management
+- **Added Comprehensive Docker Guide**: Complete documentation for Docker deployments
+- **Optimized Performance**: Enhanced autoloader and cache handling for containers
+
+### 🐛 Critical Bug Fixes
+
+- **Resolved Patch Conflicts**: Added `patches: {}` to prevent patch application errors
+- **Fixed Composer Plugin Issues**: Disabled problematic plugins that cause build failures
+- **Enhanced Docker Support**: Complete compatibility with all major container platforms
+- **Improved Build Performance**: Optimized composer install process for Docker environments
+
+### 📚 Documentation Enhancements
+
+- **Added DOCKER_GUIDE.md**: Comprehensive Docker deployment guide with examples
+- **Enhanced Installation Guide**: Docker-specific installation instructions
+- **Updated Troubleshooting**: Complete solutions for all Docker-related issues
+- **Added Best Practices**: Production-ready Docker configurations
+
+### 🔧 Technical Improvements
+
+- **Composer Config Optimization**: Added explicit plugin and autoloader configurations
+- **Build Process Enhancement**: Streamlined dependency resolution for containers
+- **Cache Management**: Improved cache handling in Docker environments
+- **Performance Optimization**: Faster package loading and initialization
+
 ## [v2.2.5] - 2025-11-10
 
 ### 🚀 Docker Compatibility & Console Command Fixes
