@@ -510,19 +510,25 @@ php artisan ami:action Command --arguments=Command:"dongle show devices"
 ### Docker-Specific Issues (v2.2.5+)
 
 4. **Docker Build Failures**:
+
    ```
    No available patcher was able to apply patch
    ```
+
    **Solution**: Add `.dockerignore` and use optimized Composer install:
+
    ```dockerfile
    RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-cache
    ```
 
 5. **Console Commands in Docker**:
+
    ```
    OutputStyle class not found
    ```
+
    **Solution**: This is fixed in v2.2.5. Update to the latest version:
+
    ```bash
    composer require shahkochaki/ami-laravel-asterisk-manager-interface:^2.2.5
    ```
@@ -1854,18 +1860,21 @@ tests/                # Test files
 ## 🆕 What's New in v2.2.5
 
 ### 🐛 Critical Fixes
+
 - **✅ Docker Compatibility**: Fixed console command execution in Docker environments
-- **✅ Composer Issues**: Resolved patch application failures during Docker builds  
+- **✅ Composer Issues**: Resolved patch application failures during Docker builds
 - **✅ Production Stability**: Enhanced error handling and class loading
 - **✅ Console Commands**: Fixed OutputStyle class resolution issues
 
 ### 🚀 Enhancements
+
 - **🔧 Docker Support**: Added `.dockerignore` template and build optimizations
 - **📚 Documentation**: Updated with Docker best practices and troubleshooting
 - **🛡️ Error Handling**: Improved exception handling in command execution
 - **⚡ Performance**: Optimized dependency loading and command initialization
 
 ### 📦 Quick Update
+
 ```bash
 composer update shahkochaki/ami-laravel-asterisk-manager-interface
 ```
@@ -1873,6 +1882,7 @@ composer update shahkochaki/ami-laravel-asterisk-manager-interface
 ## 🆕 Previous Features - System Management (v2.1+)
 
 ### Core System Management
+
 - ✅ **SystemManager Service**: Complete control of Asterisk/Issabel server
 - ✅ **System Commands**: CLI commands for system management
 - ✅ **Scheduled Operations**: Queue-based scheduled operations
@@ -1906,13 +1916,13 @@ php artisan ami:system status
 
 ## 📈 Release History
 
-| Version | Date       | Key Features                                    |
-| ------- | ---------- | ----------------------------------------------- |
-| v2.2.5  | 2025-11-10 | 🐛 Docker fixes, Console command improvements   |
-| v2.2.4  | 2025-10-20 | 🔧 React Socket API compatibility              |
-| v2.2.3  | 2025-09-15 | 🚀 Performance improvements                    |
-| v2.1.x  | 2025-08-xx | 🖥️ System Management features                  |
-| v2.0.x  | 2025-06-xx | 🎯 Modern PHP 8.0+ support                     |
+| Version | Date       | Key Features                                  |
+| ------- | ---------- | --------------------------------------------- |
+| v2.2.5  | 2025-11-10 | 🐛 Docker fixes, Console command improvements |
+| v2.2.4  | 2025-10-20 | 🔧 React Socket API compatibility             |
+| v2.2.3  | 2025-09-15 | 🚀 Performance improvements                   |
+| v2.1.x  | 2025-08-xx | 🖥️ System Management features                 |
+| v2.0.x  | 2025-06-xx | 🎯 Modern PHP 8.0+ support                    |
 
 ## 🎯 Quick Links
 
