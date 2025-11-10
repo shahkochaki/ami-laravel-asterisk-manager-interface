@@ -156,7 +156,7 @@ class Command extends SymfonyCommand
     {
         $this->input = $input;
 
-        $this->output = new OutputStyle($input, $output);
+        $this->output = new \Shahkochaki\Ami\Commands\OutputStyle($input, $output);
 
         return parent::run($input, $output);
     }

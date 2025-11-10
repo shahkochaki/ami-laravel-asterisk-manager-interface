@@ -1,0 +1,7 @@
+vendor/
+composer.lock
+.git/
+.env
+node_modules/
+*.patch
+patches/
