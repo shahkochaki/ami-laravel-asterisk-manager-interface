@@ -5,6 +5,35 @@ All notable changes to the `shahkochaki/ami-laravel-asterisk-manager-interface` 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.5] - 2025-11-10
+
+### 🚀 Docker Compatibility & Console Command Fixes
+
+- **Fixed Console Command Execution**: Resolved OutputStyle class loading issues in production environments
+- **Enhanced Docker Support**: Fixed Composer patch application failures during Docker builds
+- **Improved Command Class Architecture**: Enhanced namespace resolution and constructor handling
+- **Added .dockerignore Template**: Provided template to prevent unnecessary files in Docker builds
+
+### 🐛 Bug Fixes
+
+- **Fixed Command.php OutputStyle Resolution**: Updated to use fully qualified class name for proper loading
+- **Resolved Docker Build Issues**: Fixed "No available patcher" errors during composer install
+- **Enhanced Error Handling**: Improved exception handling in console command execution
+- **Fixed Type Declarations**: Refined method signatures and return types for better compatibility
+
+### 🔧 Technical Improvements
+
+- **Docker Optimization**: Added recommended Docker build configurations
+- **Enhanced Documentation**: Updated README with Docker best practices and troubleshooting
+- **Improved Code Quality**: Better error messages and debugging capabilities
+- **Production Stability**: Enhanced deployment reliability in containerized environments
+
+### 📚 Documentation
+
+- **Updated Version Compatibility Table**: Added comprehensive version support matrix
+- **Enhanced Docker Section**: Added deployment best practices for containerized environments
+- **Improved Troubleshooting Guide**: Added solutions for common Docker deployment issues
+
 ## [v2.2.4] - 2025-10-20
 
 ### 🐛 React Socket API Compatibility Fix

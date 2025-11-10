@@ -38,25 +38,53 @@ A powerful and easy-to-use Laravel package for connecting to VOIP servers on the
 
 ## 🔄 Version Compatibility
 
-| Package Version | PHP Version | Laravel Version | Status     |
-| --------------- | ----------- | --------------- | ---------- |
-| 2.x             | 8.0+        | 9.0+            | ✅ Current |
-| 1.x             | 5.6+        | 5.1+            | ⚠️ Legacy  |
+| Package Version | PHP Version | Laravel Version | Features                      | Status     |
+| --------------- | ----------- | --------------- | ----------------------------- | ---------- |
+| 2.2.5           | 8.0+        | 9.0-12          | Console Command Fix, Docker   | ✅ Latest  |
+| 2.2.x           | 8.0+        | 9.0-12          | System Management, Queue Jobs | ✅ Current |
+| 2.1.x           | 8.0+        | 9.0-11          | Enhanced Features             | ✅ Stable  |
+| 2.0.x           | 8.0+        | 9.0-10          | Modern PHP Features           | ✅ LTS     |
+| 1.x             | 5.6+        | 5.1+            | Basic AMI Operations          | ⚠️ Legacy  |
 
-**Note**: Version 2.x includes modern PHP features like typed properties, match expressions, and improved performance.
+**Note**: Version 2.2.5 includes Docker compatibility fixes and enhanced console command handling.
 
 ## 🚀 Installation
 
 ### Step 1: Install via Composer
 
 ```bash
+# Latest stable release (v2.2.5)
 composer require shahkochaki/ami-laravel-asterisk-manager-interface
+
+# Or specify exact version
+composer require shahkochaki/ami-laravel-asterisk-manager-interface:^2.2.5
+
+# For development version
+composer require shahkochaki/ami-laravel-asterisk-manager-interface:dev-master
 ```
 
-Or for the latest development version:
+### Docker Installation
 
-```bash
-composer require shahkochaki/ami-laravel-asterisk-manager-interface:dev-master
+For Docker environments, add a `.dockerignore` file to your project root:
+
+```
+vendor/
+composer.lock
+.git/
+.env
+node_modules/
+*.patch
+patches/
+```
+
+And use this in your Dockerfile:
+
+```dockerfile
+# Install PHP dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-cache
+
+# Alternative for complex patch scenarios
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-plugins
 ```
 
 ### Step 2: Register Service Provider
@@ -478,6 +506,32 @@ php artisan ami:action Ping
 # Check dongle devices status
 php artisan ami:action Command --arguments=Command:"dongle show devices"
 ```
+
+### Docker-Specific Issues (v2.2.5+)
+
+4. **Docker Build Failures**:
+   ```
+   No available patcher was able to apply patch
+   ```
+   **Solution**: Add `.dockerignore` and use optimized Composer install:
+   ```dockerfile
+   RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-cache
+   ```
+
+5. **Console Commands in Docker**:
+   ```
+   OutputStyle class not found
+   ```
+   **Solution**: This is fixed in v2.2.5. Update to the latest version:
+   ```bash
+   composer require shahkochaki/ami-laravel-asterisk-manager-interface:^2.2.5
+   ```
+
+6. **Composer Cache Issues**:
+   ```bash
+   # Clear composer cache before Docker build
+   composer clear-cache
+   ```
 
 ## 🔧 Development
 
@@ -1797,16 +1851,34 @@ tests/                # Test files
 - [System Management Examples](examples/system_management_examples.php) - مثال‌های عملی
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - راهنمای عیب‌یابی و حل مشکلات
 
-## 🆕 تغییرات نسخه جدید / What's New
+## 🆕 What's New in v2.2.5
 
-### نسخه 2.1+ - مدیریت سیستم
+### 🐛 Critical Fixes
+- **✅ Docker Compatibility**: Fixed console command execution in Docker environments
+- **✅ Composer Issues**: Resolved patch application failures during Docker builds  
+- **✅ Production Stability**: Enhanced error handling and class loading
+- **✅ Console Commands**: Fixed OutputStyle class resolution issues
 
-- ✅ **SystemManager Service**: کنترل کامل سرور Asterisk/Issabel
-- ✅ **System Commands**: دستورات CLI برای مدیریت سیستم
-- ✅ **Scheduled Operations**: عملیات برنامه‌ریزی شده با Queue
-- ✅ **Health Monitoring**: نظارت بر سلامت سیستم
-- ✅ **Safe Operations**: عملیات امن با بررسی شرایط
-- ✅ **Event Integration**: ادغام با سیستم رویداد Laravel
+### 🚀 Enhancements
+- **🔧 Docker Support**: Added `.dockerignore` template and build optimizations
+- **📚 Documentation**: Updated with Docker best practices and troubleshooting
+- **🛡️ Error Handling**: Improved exception handling in command execution
+- **⚡ Performance**: Optimized dependency loading and command initialization
+
+### 📦 Quick Update
+```bash
+composer update shahkochaki/ami-laravel-asterisk-manager-interface
+```
+
+## 🆕 Previous Features - System Management (v2.1+)
+
+### Core System Management
+- ✅ **SystemManager Service**: Complete control of Asterisk/Issabel server
+- ✅ **System Commands**: CLI commands for system management
+- ✅ **Scheduled Operations**: Queue-based scheduled operations
+- ✅ **Health Monitoring**: System health and resource monitoring
+- ✅ **Safe Operations**: Safe operations with condition checking
+- ✅ **Event Integration**: Integration with Laravel event system
 
 ### امکانات جدید:
 
@@ -1832,8 +1904,26 @@ php artisan ami:system reload --module=sip
 php artisan ami:system status
 ```
 
+## 📈 Release History
+
+| Version | Date       | Key Features                                    |
+| ------- | ---------- | ----------------------------------------------- |
+| v2.2.5  | 2025-11-10 | 🐛 Docker fixes, Console command improvements   |
+| v2.2.4  | 2025-10-20 | 🔧 React Socket API compatibility              |
+| v2.2.3  | 2025-09-15 | 🚀 Performance improvements                    |
+| v2.1.x  | 2025-08-xx | 🖥️ System Management features                  |
+| v2.0.x  | 2025-06-xx | 🎯 Modern PHP 8.0+ support                     |
+
+## 🎯 Quick Links
+
+- **📦 Packagist**: [shahkochaki/ami-laravel-asterisk-manager-interface](https://packagist.org/packages/shahkochaki/ami-laravel-asterisk-manager-interface)
+- **📋 Changelog**: [CHANGELOG.md](CHANGELOG.md)
+- **📄 Release Notes**: [Latest Release](RELEASE_NOTES_v2.2.5.md)
+- **🐛 Issues**: [GitHub Issues](https://github.com/shahkochaki/ami-laravel-asterisk-manager-interface/issues)
+- **💡 Discussions**: [GitHub Discussions](https://github.com/shahkochaki/ami-laravel-asterisk-manager-interface/discussions)
+
 ---
 
 ⭐ اگر این پروژه برایتان مفید بود، لطفاً ستاره بدهید!
 
-**Made with ❤️ for Iranian developers**
+**Made with ❤️ for Iranian developers and global PHP community**
