@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'shahkochaki/ami-laravel-asterisk-manager-interface',
-        'pretty_version' => 'v2.2.4',
-        'version' => '2.2.4.0',
+        'pretty_version' => 'v2.2.5',
+        'version' => '2.2.5.0',
         'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
@@ -325,15 +325,6 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
-        'phpunit/phpunit' => array(
-            'pretty_version' => '10.5.58',
-            'version' => '10.5.58.0',
-            'reference' => 'e24fb46da450d8e6a5788670513c1af1424f16ca',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../phpunit/phpunit',
-            'aliases' => array(),
-            'dev_requirement' => true,
-        ),
         'psr/clock' => array(
             'pretty_version' => '1.0.0',
             'version' => '1.0.0.0',
@@ -602,8 +593,8 @@
             'dev_requirement' => true,
         ),
         'shahkochaki/ami-laravel-asterisk-manager-interface' => array(
-            'pretty_version' => 'v2.2.4',
-            'version' => '2.2.4.0',
+            'pretty_version' => 'v2.2.5',
+            'version' => '2.2.5.0',
             'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
